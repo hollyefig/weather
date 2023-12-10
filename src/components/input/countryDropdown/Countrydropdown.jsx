@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Select from "react-select";
 import { getCountryList } from "../../../APIcalls";
 
 export const Countrydropdown = ({ setInputCountry, inputCountry }) => {
   const [sortedArray, setSortedArray] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   // ! get country list
   const importCountries = async () => {
@@ -29,22 +31,24 @@ export const Countrydropdown = ({ setInputCountry, inputCountry }) => {
     setInputCountry(e.target.value);
   };
 
+  const options = sortedArray.map((country) => ({
+    value: country,
+    label: country,
+  }));
+
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    setInputCountry(selectedOption.value);
+  };
+
   return (
     <div>
-      <select
-        autoComplete='country'
-        className='inputCountry'
-        onInput={(e) => selectedCountry(e)}
-        value={inputCountry}
-      >
-        {sortedArray.map((e) => {
-          return (
-            <option key={e} value={e}>
-              {e}
-            </option>
-          );
-        })}
-      </select>
+      <Select
+        options={options}
+        value={selectedOption}
+        onChange={handleChange}
+        placeholder='Select a country'
+      />
     </div>
   );
 };

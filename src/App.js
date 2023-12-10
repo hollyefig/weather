@@ -42,14 +42,16 @@ function App() {
           }
         }
       } else if (countryCode !== "US") {
-        let loadZip = await getZip(`${parseZip},${countryCode}`);
-        if (loadZip) {
-          loadTown = await getTown(loadZip.name);
-          setSelectedTown(...loadTown);
+        if (inputTown.length !== 5) {
+          let loadZip = await getZip(`${parseZip},${countryCode}`);
+          if (loadZip) {
+            loadTown = await getTown(loadZip.name);
+            setSelectedTown(...loadTown);
 
-          // ensure there is data
-          if (loadTown !== undefined) {
-            fetchWeather(...loadTown);
+            // ensure there is data
+            if (loadTown !== undefined) {
+              fetchWeather(...loadTown);
+            }
           }
         }
       }
