@@ -11,6 +11,7 @@ function App() {
   const [selectTown, setSelectedTown] = useState(null);
   const [weather, setWeather] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
+  const [isUS, setIsUS] = useState(true);
 
   // & when town is read
   const townEntered = useCallback(async () => {
@@ -30,7 +31,7 @@ function App() {
     else {
       let parseZip = parseInt(inputTown);
       // ensure it's a 5-digit zip (US only)
-      if (countryCode === "US" || !countryCode) {
+      if (isUS) {
         if (inputTown.length === 5) {
           let loadZip = await getZip(parseZip);
           loadTown = await getTown(loadZip.name);
@@ -42,7 +43,7 @@ function App() {
         }
       }
       // if non US zip code
-      else if (countryCode !== "US") {
+      else if (!isUS) {
         if (inputTown.length !== 5) {
           let loadZip;
           inputTown.includes("-")
@@ -61,7 +62,7 @@ function App() {
       }
     }
     // fetch weather
-  }, [inputTown, countryCode]);
+  }, [inputTown, countryCode, isUS]);
 
   // ! get country code
   const countryCodeFunc = useCallback(async () => {
@@ -96,6 +97,7 @@ function App() {
         inputCountry={inputCountry}
         setInputCountry={setInputCountry}
         townEntered={townEntered}
+        setIsUS={setIsUS}
       />
       <Output selectTown={selectTown} weather={weather} />
     </div>

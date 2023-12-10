@@ -23,6 +23,9 @@ export const Output = ({ selectTown, weather }) => {
         <>
           <h4>Country:</h4>
           {countryName}
+          <p>
+            <img alt={countryName} src={countryFlag} width='15' />
+          </p>
           <h4>Town:</h4>
           {selectTown.name}
           <h4>Region/State:</h4>

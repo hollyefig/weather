@@ -5,9 +5,9 @@ import "./input.css";
 
 export const Input = ({
   setInputTown,
-  townEntered,
+  // townEntered,
   setInputCountry,
-  inputCountry,
+  setIsUS,
 }) => {
   const countryRef = useRef(null);
 
@@ -19,10 +19,12 @@ export const Input = ({
     });
     if (e.target.checked !== undefined) {
       if (e.target.checked) {
+        setIsUS(false);
         tl.to(countryRef.current, { height: "40px" }).to(countryRef.current, {
           overflow: "visible",
         });
       } else {
+        setIsUS(true);
         tl.to(countryRef.current, { overflow: "hidden" }).to(
           countryRef.current,
           { height: "0px" },
@@ -66,9 +68,9 @@ export const Input = ({
         countryRef={countryRef}
       />
 
-      <button type='button' className='btnEnter' onClick={townEntered}>
+      {/* <button type='button' className='btnEnter' onClick={townEntered}>
         Enter
-      </button>
+      </button> */}
     </div>
   );
 };

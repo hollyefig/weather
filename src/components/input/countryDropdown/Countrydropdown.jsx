@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { getCountryList } from "../../../APIcalls";
 
-export const Countrydropdown = ({
-  setInputCountry,
-  countryRef,
-  inputCountry,
-}) => {
+export const Countrydropdown = ({ setInputCountry, countryRef }) => {
   const [sortedArray, setSortedArray] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
