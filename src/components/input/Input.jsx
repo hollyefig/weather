@@ -5,7 +5,7 @@ import "./input.css";
 
 export const Input = ({
   setInputTown,
-  // townEntered,
+  townEntered,
   setInputCountry,
   setIsUS,
 }) => {
