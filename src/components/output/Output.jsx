@@ -9,12 +9,13 @@ export const Output = ({ selectTown, weather }) => {
   const toCountryName = async () => {
     let countryCode = selectTown.country;
     let loadName = await getCountryName(countryCode);
+
     setCountryName(loadName[0].name.common);
     setCountryFlag(loadName[0].flags.svg);
   };
 
   if (weather) {
-    console.log("logging", weather);
+    // console.log("logging", weather);
     toCountryName();
   }
   return (

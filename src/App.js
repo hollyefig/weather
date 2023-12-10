@@ -44,24 +44,32 @@ function App() {
       }
       // if non US zip code
       else if (!isUS) {
-        if (inputTown.length !== 5) {
-          let loadZip;
-          inputTown.includes("-")
-            ? (loadZip = await getZip(`${inputTown},${countryCode}`))
-            : (loadZip = await getZip(`${parseZip},${countryCode}`));
-          if (loadZip) {
-            loadTown = await getTown(loadZip.name);
-            setSelectedTown(...loadTown);
+        let loadZip;
+        // adjust if there's a "-" (ex: japan)
+        if (inputTown.includes("-")) {
+          loadZip = await getZip(`${inputTown},${countryCode}`);
+        } else {
+          console.log(
+            "what is input",
+            inputTown,
+            "parsed",
+            parseInt(inputTown)
+          );
+          loadZip = await getZip(`${parseZip},${countryCode}`);
+        }
 
-            // ensure there is data
-            if (loadTown !== undefined) {
-              fetchWeather(...loadTown);
-            }
+        if (loadZip) {
+          loadTown = await getTown(loadZip.name);
+          setSelectedTown(...loadTown);
+
+          // ensure there is data
+          if (loadTown !== undefined) {
+            // fetch weather
+            fetchWeather(...loadTown);
           }
         }
       }
     }
-    // fetch weather
   }, [inputTown, countryCode, isUS]);
 
   // ! get country code
