@@ -16,21 +16,38 @@ function App() {
   // & when town is read
   const townEntered = useCallback(async () => {
     let loadTown;
-    // ! for town input
+    // ! for string / letters input
     if (isNaN(parseInt(inputTown))) {
       if (inputTown !== null && inputTown !== "") {
-        loadTown = await getTown(inputTown);
-        setSelectedTown(...loadTown);
-        // ensure data is found before sending off
-        if (loadTown.length !== 0) {
-          fetchWeather(...loadTown);
+        if (isUS) {
+          loadTown = await getTown(inputTown);
+          setSelectedTown(...loadTown);
+          // ensure data is found before sending off
+          if (loadTown.length !== 0) {
+            fetchWeather(...loadTown);
+          }
+        }
+        // ! Non US zip with letters
+        else {
+          let zip = inputTown.replace(" ", "+");
+          let loadZip = await getZip(`${zip},${countryCode}`);
+          if (loadZip) {
+            loadTown = await getTown(loadZip.name);
+            setSelectedTown(...loadTown);
+
+            // ensure there is data
+            if (loadTown !== undefined) {
+              // fetch weather
+              fetchWeather(...loadTown);
+            }
+          }
         }
       }
     }
     // ! for zip input
     else {
       let parseZip = parseInt(inputTown);
-      // ensure it's a 5-digit zip (US only)
+      // ? ensure it's a 5-digit zip (US only)
       if (isUS) {
         if (inputTown.length === 5) {
           let loadZip = await getZip(parseZip);
@@ -42,21 +59,13 @@ function App() {
           }
         }
       }
-      // if non US zip code
+      // ? if non US zip code
       else if (!isUS) {
         let loadZip;
         // adjust if there's a "-" (ex: japan)
-        if (inputTown.includes("-")) {
-          loadZip = await getZip(`${inputTown},${countryCode}`);
-        } else {
-          console.log(
-            "what is input",
-            inputTown,
-            "parsed",
-            parseInt(inputTown)
-          );
-          loadZip = await getZip(`${parseZip},${countryCode}`);
-        }
+        inputTown.includes("-")
+          ? (loadZip = await getZip(`${inputTown},${countryCode}`))
+          : (loadZip = await getZip(`${parseZip},${countryCode}`));
 
         if (loadZip) {
           loadTown = await getTown(loadZip.name);
