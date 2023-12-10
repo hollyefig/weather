@@ -13,7 +13,7 @@ export const Input = ({
 
   // ! when non US zip is checked
   const checked = (e) => {
-    // define defaults for gsap
+    // ? define defaults for gsap
     let tl = gsap.timeline({
       defaults: { duration: 0.5, ease: "power2.out", delay: 0 },
     });
