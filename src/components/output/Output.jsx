@@ -3,20 +3,22 @@ import { getCountryName } from "../../APIcalls";
 
 export const Output = ({ selectTown, weather }) => {
   const [countryName, setCountryName] = useState(null);
+  const [countryFlag, setCountryFlag] = useState("");
 
   // ! get country name
   const toCountryName = async () => {
     let countryCode = selectTown.country;
     let loadName = await getCountryName(countryCode);
     setCountryName(loadName[0].name.common);
+    setCountryFlag(loadName[0].flags.svg);
   };
 
   if (weather) {
-    // console.log("logging", weather);
+    console.log("logging", weather);
     toCountryName();
   }
   return (
-    <div>
+    <div className='output'>
       {selectTown && weather && (
         <>
           <h4>Country:</h4>

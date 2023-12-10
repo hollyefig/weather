@@ -20,6 +20,7 @@ export const getZip = async (zip) => {
     return res.data;
   } catch (error) {
     console.error("error fetching zip", error);
+    window.alert("error fetching zip");
     return;
   }
 };

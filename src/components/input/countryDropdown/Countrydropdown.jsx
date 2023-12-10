@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { getCountryList } from "../../../APIcalls";
 
-export const Countrydropdown = ({ setInputCountry, inputCountry }) => {
+export const Countrydropdown = ({
+  setInputCountry,
+  countryRef,
+  inputCountry,
+}) => {
   const [sortedArray, setSortedArray] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -39,12 +43,12 @@ export const Countrydropdown = ({ setInputCountry, inputCountry }) => {
   };
 
   return (
-    <div>
+    <div className='countryDropdown' ref={countryRef}>
       <Select
         options={options}
         value={selectedOption}
         onChange={handleChange}
-        placeholder='Select a country (if zip input is non-US)'
+        placeholder='Select a country'
       />
     </div>
   );

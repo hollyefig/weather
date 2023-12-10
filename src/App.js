@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import "./App.css";
 // get componenets
 import { Input } from "./components/input/Input";
 import { Output } from "./components/output/Output";
@@ -41,9 +40,14 @@ function App() {
             fetchWeather(...loadTown);
           }
         }
-      } else if (countryCode !== "US") {
+      }
+      // if non US zip code
+      else if (countryCode !== "US") {
         if (inputTown.length !== 5) {
-          let loadZip = await getZip(`${parseZip},${countryCode}`);
+          let loadZip;
+          inputTown.includes("-")
+            ? (loadZip = await getZip(`${inputTown},${countryCode}`))
+            : (loadZip = await getZip(`${parseZip},${countryCode}`));
           if (loadZip) {
             loadTown = await getTown(loadZip.name);
             setSelectedTown(...loadTown);
@@ -64,7 +68,6 @@ function App() {
     if (inputCountry) {
       let loadCode = await getCountryCode(inputCountry);
       setCountryCode(loadCode[0].cca2);
-      console.log(loadCode[0].cca2);
     }
   }, [inputCountry]);
 

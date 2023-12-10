@@ -1,10 +1,24 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url(./IMGs/defaultBG.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+:root {
+  --inputTownZipBackground: #e5f9fd78;
+  --defaultFont: 'Montserrat', sans-serif;
+  --inputColor: #2b5351;
+  --inputColorPlaceholder: #2b53517d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 code {

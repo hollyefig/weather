@@ -1,0 +1,60 @@
+
+
+.input {
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 10px;
+    --inputMaxWidth: 370px;
+}
+
+.inputDefault {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--inputMaxWidth);
+    width: 100%;
+    row-gap: 5px;
+}
+
+.inputTownZip {
+    padding: .7em;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    background-color: var(--inputTownZipBackground);
+    font-size: 18px;
+    color: var(--inputColor);
+    text-align: center;
+}
+
+.inputTownZip::placeholder {
+    color: var(--inputColorPlaceholder);
+}
+
+.inputTownZip:focus {
+    outline: none;
+}
+
+.checkboxSection {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+}
+
+.checkZip {
+    cursor: pointer;
+}
+
+.countryDropdown {
+    height: 0;
+    max-width: var(--inputMaxWidth);
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.btnEnter {
+    cursor: pointer;
+}
