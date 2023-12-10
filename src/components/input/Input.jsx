@@ -1,4 +1,11 @@
-export const Input = ({ setInputTown, townEntered }) => {
+import { Countrydropdown } from "./countryDropdown/Countrydropdown";
+
+export const Input = ({
+  setInputTown,
+  townEntered,
+  setInputCountry,
+  inputCountry,
+}) => {
   return (
     <div>
       {/* possibly address-level2  */}
@@ -7,7 +14,12 @@ export const Input = ({ setInputTown, townEntered }) => {
         autoComplete='address-level2'
         onInput={(e) => setInputTown(e.target.value)}
         className='inputTown'
-        placeholder='city / town'
+        placeholder='city or ZIP'
+      />
+
+      <Countrydropdown
+        setInputCountry={setInputCountry}
+        inputCountry={inputCountry}
       />
 
       <button type='button' className='btnTown' onClick={townEntered}>
