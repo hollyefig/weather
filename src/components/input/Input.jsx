@@ -68,9 +68,9 @@ export const Input = ({
         countryRef={countryRef}
       />
 
-      {/* <button type='button' className='btnEnter' onClick={townEntered}>
+      <button type='button' className='btnEnter' onClick={townEntered}>
         Enter
-      </button> */}
+      </button>
     </div>
   );
 };
