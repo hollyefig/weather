@@ -26,16 +26,13 @@ export const Countrydropdown = ({ setInputCountry, inputCountry }) => {
     fetchData();
   }, []);
 
-  // country selected
-  const selectedCountry = async (e) => {
-    setInputCountry(e.target.value);
-  };
-
+  // prep for react-select
   const options = sortedArray.map((country) => ({
     value: country,
     label: country,
   }));
 
+  // country selected
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
     setInputCountry(selectedOption.value);
@@ -47,7 +44,7 @@ export const Countrydropdown = ({ setInputCountry, inputCountry }) => {
         options={options}
         value={selectedOption}
         onChange={handleChange}
-        placeholder='Select a country'
+        placeholder='Select a country (if zip input is non-US)'
       />
     </div>
   );
