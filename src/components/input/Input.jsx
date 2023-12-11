@@ -9,6 +9,7 @@ export const Input = ({
   setInputCountry,
   setIsUS,
 }) => {
+  // ~ set Refs
   const countryRef = useRef(null);
 
   // ! when non US zip is checked
@@ -20,11 +21,19 @@ export const Input = ({
     if (e.target.checked !== undefined) {
       if (e.target.checked) {
         setIsUS(false);
+        e.target.setAttribute(
+          "style",
+          "background-color: #1b93ff ; border-color: #1b93ff;"
+        );
         tl.to(countryRef.current, { height: "40px" }).to(countryRef.current, {
           overflow: "visible",
         });
       } else {
         setIsUS(true);
+        e.target.setAttribute(
+          "style",
+          "background-color: #fff ; border-color: #fff;"
+        );
         tl.to(countryRef.current, { overflow: "hidden" }).to(
           countryRef.current,
           { height: "0px" },
@@ -61,16 +70,17 @@ export const Input = ({
           </label>
         </div>
         {/*  END checkbox section */}
+        <button type='button' className='btnEnter' onClick={townEntered}>
+          <span className='material-symbols-outlined'>
+            keyboard_arrow_right
+          </span>
+        </button>
       </div>
 
       <Countrydropdown
         setInputCountry={setInputCountry}
         countryRef={countryRef}
       />
-
-      <button type='button' className='btnEnter' onClick={townEntered}>
-        Enter
-      </button>
     </div>
   );
 };

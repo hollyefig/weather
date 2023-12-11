@@ -6,13 +6,21 @@ body {
   background-image: url(./IMGs/defaultBG.png);
   background-repeat: no-repeat;
   background-size: 100% 100vh;
+  --inputHeight: 140px;
 }
 
 :root {
+  --fontLight: 300;
+  --fontReg: 400;
+  --fontBold: 600;
+  --fontBlack: 800;
   --inputTownZipBackground: #e5f9fd78;
   --defaultFont: 'Montserrat', sans-serif;
   --inputColor: #2b5351;
-  --inputColorPlaceholder: #2b53517d;
+  --white: #fff;
+  --lightTeal: #8ACDD0;
+  --mediumTeal: #0eb1b5;
+  --mediumBlue: #487896;
 }
 
 * {

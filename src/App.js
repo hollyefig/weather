@@ -12,6 +12,7 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
   const [isUS, setIsUS] = useState(true);
+  const [deg, setDeg] = useState("˚F");
 
   // & when town is read
   const townEntered = useCallback(async () => {
@@ -116,7 +117,7 @@ function App() {
         townEntered={townEntered}
         setIsUS={setIsUS}
       />
-      <Output selectTown={selectTown} weather={weather} />
+      <Output selectTown={selectTown} weather={weather} deg={deg} />
     </div>
   );
 }

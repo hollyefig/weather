@@ -1,0 +1,88 @@
+.output {
+    margin: var(--inputHeight) 0 0 0;
+    padding: 1em;
+}
+
+.sect1 {
+    /* border:1px solid white; */
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+/* & LEFT SECT  */
+.sect1Left {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainTempWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.mainTempWrap > span {
+    color: var(--white);
+}
+
+.temp {
+    --size: 210px;
+    font-size: var(--size);
+    line-height: var(--size);
+    font-weight: var(--fontBold);
+    text-shadow: 3px 3px 98px #4288b4b0;
+}
+
+.deg {
+    font-size: 40px;
+    letter-spacing: -4px;
+    font-weight: var(--fontBold);
+    margin: 5% 0 0 0;
+    text-shadow: 3px 3px 28px #4288b4b0;
+}
+
+.locationDataWrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.loc1 {  
+    font-weight: var(--fontBold);
+    color: var(--mediumBlue);
+    font-size: 40px;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid var(--mediumBlue);
+}
+
+.loc2 {  
+    padding: 10px 0 5px 0;
+    font-style: italic;
+    color: var(--mediumTeal);
+}
+
+.countrySect {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    color: var(--mediumTeal);
+}
+
+.loc3 { 
+    text-transform: uppercase;
+    font-weight: var(--fontBold);
+}
+
+.flag {
+    border-radius: 3px;
+}
+
+
+
+/* & RIGHT SECT  */
+.sect1Right {
+    flex: 1.5;
+}
