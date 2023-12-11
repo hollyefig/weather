@@ -1,11 +1,11 @@
 export const iconData = [
   {
     type: ["Thunderstorm"],
-    icon: "Rain",
+    icon: "Thunderstorm",
   },
   {
     type: ["Drizzle"],
-    icon: "Rain",
+    icon: "Drizzle",
   },
   {
     type: ["Rain"],
@@ -13,7 +13,7 @@ export const iconData = [
   },
   {
     type: ["Snow"],
-    icon: "Rain",
+    icon: "Snow",
   },
   {
     type: [
@@ -28,11 +28,11 @@ export const iconData = [
       "Squall",
       "Tornado",
     ],
-    icon: "Rain",
+    icon: "Mist",
   },
   {
     type: ["Clear"],
-    icon: "Rain",
+    icon: "Clear",
   },
   {
     type: ["Clouds"],
