@@ -21,6 +21,7 @@ body {
   --lightTeal: #8ACDD0;
   --mediumTeal: #0eb1b5;
   --mediumBlue: #487896;
+  --mediumBlueOpacity: #487896a1;
 }
 
 * {
@@ -33,3 +34,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+

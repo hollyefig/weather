@@ -107,6 +107,6 @@
     box-shadow: 0px 0px 8px var(--shadowColor), 0px 0px 8px var(--shadowColor) inset;
 }
 
-.btnEnter:hover .material-symbols-outlined {
-    /* color: var(--lightTeal); */
-}
+/* .btnEnter:hover .material-symbols-outlined {
+    color: var(--lightTeal);
+} */

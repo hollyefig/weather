@@ -86,3 +86,49 @@
 .sect1Right {
     flex: 1.5;
 }
+
+.currentIcon svg {
+    filter: drop-shadow(2px 2px 30px var(--mediumBlue));
+}
+
+.currentIcon svg * {
+    fill: var(--white);
+    stroke: var(--white);
+}
+
+.currentSect2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 3%;
+}
+
+.currentSect2 > div {
+    display: flex;
+    flex-direction: column;
+    --size: 32px;
+    font-size: var(--size);
+    line-height: calc(var(--size) * .8);
+    font-weight: var(--fontBold);
+    color: var(--mediumBlue);
+}
+
+.currentHumidity sup {
+    font-size: 18px;
+    line-height: 0px;
+    padding: 0 3px;
+}
+
+.feelsLike::before, .currentHumidity::before {
+    font-size: calc(var(--size) / 2.6);
+    font-weight: var(--fontReg);
+    color: var(--mediumBlueOpacity)
+}
+
+.feelsLike::before {
+    content: 'feels like'; 
+}
+
+.currentHumidity::before {
+    content: 'humidity';
+}
