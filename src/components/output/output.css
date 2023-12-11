@@ -87,6 +87,10 @@
     flex: 1.5;
 }
 
+.currentIcon {
+    width: 110px;
+}
+
 .currentIcon svg {
     filter: drop-shadow(2px 2px 30px var(--mediumBlue));
 }
@@ -94,6 +98,11 @@
 .currentIcon svg * {
     fill: var(--white);
     stroke: var(--white);
+}
+
+.icon {
+    width: 100%;
+    /* transform: scale(.65); */
 }
 
 .currentSect2 {

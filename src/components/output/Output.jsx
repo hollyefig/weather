@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { getCountryName } from "../../APIcalls";
 import { iconData } from "../../iconData";
 import "./output.css";
-import { Svg } from "./Svg";
+import { Svg } from "./SVG/Svg";
 
 export const Output = ({ selectTown, weather, deg }) => {
   const [countryName, setCountryName] = useState(null);
@@ -20,7 +20,7 @@ export const Output = ({ selectTown, weather, deg }) => {
   };
 
   if (weather) {
-    console.log("logging", weather);
+    // console.log("logging", weather);
     toCountryName();
   }
 
@@ -56,19 +56,7 @@ export const Output = ({ selectTown, weather, deg }) => {
             <div className='sect1Right'>
               <div className='currentSect1'>
                 <div className='currentIcon'>
-                  {Object.keys(iconData).map((i) => {
-                    const matchingType = iconData[i].type.find(
-                      (e) => e === weather.current.weather[0].main
-                    );
-
-                    if (matchingType) {
-                      console.log(iconData[i].svg);
-
-                      return <Svg icon={iconData[i].svg} />;
-                    }
-
-                    return null;
-                  })}
+                  <Svg weather={weather.current.weather[0].main} />
                 </div>
                 <div className='currentDesc'>
                   {/*  display all conditions */}
