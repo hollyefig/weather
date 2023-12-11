@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { getCountryName } from "../../APIcalls";
 import { iconData } from "../../iconData";
 import "./output.css";
+import { Svg } from "./Svg";
 
 export const Output = ({ selectTown, weather, deg }) => {
   const [countryName, setCountryName] = useState(null);
@@ -61,13 +62,9 @@ export const Output = ({ selectTown, weather, deg }) => {
                     );
 
                     if (matchingType) {
-                      console.log(iconData[i]);
-                      return (
-                        <div
-                          dangerouslySetInnerHTML={{ __html: iconData[i].svg }}
-                          key={i}
-                        ></div>
-                      );
+                      console.log(iconData[i].svg);
+
+                      return <Svg icon={iconData[i].svg} />;
                     }
 
                     return null;
