@@ -12,7 +12,7 @@
 
 /* & LEFT SECT  */
 .sect1Left {
-    flex: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,11 +84,18 @@
 
 /* & RIGHT SECT  */
 .sect1Right {
-    flex: 1.5;
+    flex: 1;
+}
+
+.currentSect1 {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5%;
 }
 
 .currentIcon {
-    width: 110px;
+    --size: 100px;
+    width: var(--size);
 }
 
 .currentIcon svg {
@@ -102,24 +109,65 @@
 
 .icon {
     width: 100%;
-    /* transform: scale(.65); */
+    max-height: var(--size);
+    height: auto;
 }
 
-.currentSect2 {
+.currentDesc {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    grid-template-rows: 25px auto;
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    column-gap: 3%;
+    column-gap: 10%;
 }
 
-.currentSect2 > div {
+.currentDesc > span {
+    grid-row: 1 / 2;
+    grid-column: 1 / 3;
+    font-size: 17px;
+    font-weight: var(--fontBold);
+    color: #fff;
+    text-shadow: 0px 0px 36px var(--blue);
+}
+
+.currentDesc > div {
     display: flex;
     flex-direction: column;
-    --size: 32px;
+    --size: 40px;
     font-size: var(--size);
-    line-height: calc(var(--size) * .8);
+    line-height: calc(var(--size) * .7);
     font-weight: var(--fontBold);
     color: var(--mediumBlue);
+}
+
+.feelsLike::before, .windChill::before, .currentHumidity::before {
+    font-size: calc(var(--size) / 3);
+    font-weight: var(--fontReg);
+    color: var(--mediumBlue)
+}
+
+.feelsLike {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+}
+.feelsLike::before {
+    content: 'feels like'; 
+}
+
+.windChill {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+.windChill::before {
+    content: 'wind chill'
+}
+
+.currentHumidity {
+    grid-row: 2 / 3;
+    grid-column: 3 / 4;
+}
+.currentHumidity::before {
+    content: 'humidity';
 }
 
 .currentHumidity sup {
@@ -128,16 +176,77 @@
     padding: 0 3px;
 }
 
-.feelsLike::before, .currentHumidity::before {
-    font-size: calc(var(--size) / 2.6);
-    font-weight: var(--fontReg);
-    color: var(--mediumBlueOpacity)
+
+.currentSect2 {
+    width: 100%;
+    /* border-top: 1px solid var(--mediumTeal); */
+    padding: 1em 0;
+    display: flex;
+    flex-direction: row;
 }
 
-.feelsLike::before {
-    content: 'feels like'; 
+.lightBar {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
 }
 
-.currentHumidity::before {
-    content: 'humidity';
+.lightBar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.lightBarWrap {
+    --height: 10px;
+    border:1px solid var(--mediumBlueOpacity);
+    height: var(--height);
+    border-radius: 20px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bar {
+    --barHeight:calc(var(--height) * 1.3);
+    height: var(--barHeight);
+    width: 40%;
+    background-color: var(--white);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    box-shadow: 0 0 50px var(--mediumBlueOpacity);
+}
+
+.bar > div {
+    height: calc(var(--height) * .8);
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+}
+
+.rise {
+    background-color: var(--mediumTeal);
+}
+.set {
+    background-color: var(--blue);
+}
+
+.sect2Right {
+    flex: 1;
+}
+
+
+/* ~ RESPONSIVE  */
+
+@media only screen and (max-width: 768px) {
+    .sect1 {
+        flex-direction: column;
+        align-items: center;
+        row-gap: 20px;
+    }
 }

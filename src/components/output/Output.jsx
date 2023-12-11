@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { getCountryName } from "../../APIcalls";
-import { iconData } from "../../iconData";
 import "./output.css";
 import { Svg } from "./SVG/Svg";
 
@@ -9,6 +8,8 @@ export const Output = ({ selectTown, weather, deg }) => {
   const [countryFlag, setCountryFlag] = useState("");
   const tempDivWidth = useRef(null);
   const locDatWrap = useRef(null);
+  const [lightHours, setLightHours] = useState(null);
+  const lightBar = useRef(null);
 
   // ! get country name
   const toCountryName = async () => {
@@ -18,6 +19,19 @@ export const Output = ({ selectTown, weather, deg }) => {
     setCountryName(loadName[0].name.common);
     setCountryFlag(loadName[0].flags.svg);
   };
+
+  // ! calculate daylight hours
+  const daylightHours = useCallback((e) => {
+    let set = e.sunset;
+    let rise = e.sunrise;
+    let seconds = set - rise;
+    let min = seconds / 60;
+    let hours = Math.floor(min / 60);
+
+    lightBar.current.style.width = (hours / 24) * 100 + "%";
+
+    return hours;
+  });
 
   if (weather) {
     // console.log("logging", weather);
@@ -29,8 +43,9 @@ export const Output = ({ selectTown, weather, deg }) => {
     if (selectTown && weather) {
       let computed = window.getComputedStyle(tempDivWidth.current);
       locDatWrap.current.style.width = computed.width;
+      setLightHours(daylightHours(weather.current));
     }
-  });
+  }, [daylightHours, setLightHours, weather, selectTown]);
 
   return (
     <div className='output'>
@@ -59,26 +74,44 @@ export const Output = ({ selectTown, weather, deg }) => {
                   <Svg weather={weather.current.weather[0].main} />
                 </div>
                 <div className='currentDesc'>
-                  {/*  display all conditions */}
-                  {weather.current.weather.map((e, index) => {
-                    if (weather.current.weather.length - 1 === index) {
-                      return e.description;
-                    } else {
-                      return `${e.description}, `;
-                    }
-                  })}
+                  <span>
+                    {/*  display all conditions */}
+                    {weather.current.weather.map((e, index) => {
+                      if (weather.current.weather.length - 1 === index) {
+                        return e.description;
+                      } else {
+                        return `${e.description}, `;
+                      }
+                    })}
+                  </span>
+                  <div className='feelsLike'>
+                    {Math.floor(weather.current.feels_like)}
+                  </div>
+                  <div className='windChill'>
+                    {Math.floor(weather.current.wind_deg)}
+                  </div>
+                  <div className='currentHumidity'>
+                    <span>
+                      {weather.current.humidity}
+                      <sup>%</sup>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className='currentSect2'>
-                <div className='feelsLike'>
-                  {Math.floor(weather.current.feels_like)}
+                <div className='lightBar'>
+                  <div className='dayHoursDesc'>
+                    <span>{lightHours}&nbsp;</span>
+                    <span>hours of daylight</span>
+                  </div>
+                  <div className='lightBarWrap'>
+                    <div className='bar' ref={lightBar}>
+                      <div className='rise'></div>
+                      <div className='set'></div>
+                    </div>
+                  </div>
                 </div>
-                <div className='currentHumidity'>
-                  <span>
-                    {weather.current.humidity}
-                    <sup>%</sup>
-                  </span>
-                </div>
+                <div className='sect2Right'>right</div>
               </div>
             </div>
           </div>
