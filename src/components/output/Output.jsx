@@ -10,6 +10,7 @@ export const Output = ({ selectTown, weather, deg }) => {
   const locDatWrap = useRef(null);
   const [lightHours, setLightHours] = useState(null);
   const lightBar = useRef(null);
+  const [riseSet, setRiseSet] = useState(null);
 
   // ! get country name
   const toCountryName = async () => {
@@ -21,31 +22,80 @@ export const Output = ({ selectTown, weather, deg }) => {
   };
 
   // ! calculate daylight hours
-  const daylightHours = useCallback((e) => {
-    let set = e.sunset;
-    let rise = e.sunrise;
-    let seconds = set - rise;
-    let min = seconds / 60;
-    let hours = Math.floor(min / 60);
+  const daylightHours = useCallback(
+    (e) => {
+      let set = e.sunset;
+      let rise = e.sunrise;
+      let seconds = set - rise;
+      let min = seconds / 60;
+      let hours = Math.floor(min / 60);
+      lightBar.current.style.width = (hours / 24) * 100 + "%";
+      return hours;
+    },
+    [lightBar]
+  );
 
-    lightBar.current.style.width = (hours / 24) * 100 + "%";
+  // ! convert UTC to time
+  const calculateLocalTime = (timeStamps, timezoneOffset) => {
+    let arr = [];
 
-    return hours;
-  });
+    for (let i = 0; i < timeStamps.length; i++) {
+      // Convert UTC timestamp to milliseconds
+      const utcMilliseconds = timeStamps[i] * 1000;
 
+      // Apply the timezone offset
+      const localMilliseconds = utcMilliseconds + timezoneOffset * 1000;
+
+      // Create a new Date object with the local time
+      const localDate = new Date(localMilliseconds);
+      arr.push(localDate);
+    }
+
+    // Return a Date object with local time
+    return arr;
+  };
+  // ! format time to GMT
+  function formatTimeInTimeZone(date, timezone) {
+    let arr = [];
+    for (let i = 0; i < date.length; i++) {
+      const options = {
+        hour: "numeric",
+        minute: "numeric",
+        timeZone: timezone,
+        timeZoneName: "short",
+      };
+      const formattedTime = new Intl.DateTimeFormat("en-US", options).format(
+        date[i]
+      );
+
+      arr.push(formattedTime.replace(/\bUTC\b/, "").trim());
+    }
+    return arr;
+  }
+
+  // get country name
   if (weather) {
-    // console.log("logging", weather);
+    console.log("logging", weather);
     toCountryName();
   }
 
-  // ! make location data be same width as Temp div
+  // * make location data be same width as Temp div
   useEffect(() => {
     if (selectTown && weather) {
       let computed = window.getComputedStyle(tempDivWidth.current);
       locDatWrap.current.style.width = computed.width;
       setLightHours(daylightHours(weather.current));
+
+      const riseSetTimes = calculateLocalTime(
+        [weather.current.sunrise, weather.current.sunset],
+        weather.timezone_offset
+      );
+
+      const gmtFormattedTime = formatTimeInTimeZone(riseSetTimes, "GMT");
+
+      setRiseSet(gmtFormattedTime);
     }
-  }, [daylightHours, setLightHours, weather, selectTown]);
+  }, [daylightHours, setLightHours, weather, selectTown, setRiseSet]);
 
   return (
     <div className='output'>
@@ -110,6 +160,8 @@ export const Output = ({ selectTown, weather, deg }) => {
                       <div className='set'></div>
                     </div>
                   </div>
+                  <div className='riseTime'>{riseSet && riseSet[0]}</div>
+                  <div className='riseTime'>{riseSet && riseSet[1]}</div>
                 </div>
                 <div className='sect2Right'>right</div>
               </div>
