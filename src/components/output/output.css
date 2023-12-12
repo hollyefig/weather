@@ -306,4 +306,8 @@
     .currentIcon {
         --size: 85px;
     }
+    
+    .currentSect2 {
+        flex-direction: column;
+    }
 }
