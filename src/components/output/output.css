@@ -115,7 +115,7 @@
 
 .currentDesc {
     display: grid;
-    grid-template-columns: repeat(3, max-content);
+    grid-template-columns: repeat(2, max-content);
     grid-template-rows: 25px auto;
     width: 100%;
     column-gap: 10%;
@@ -154,17 +154,9 @@
     content: 'feels like'; 
 }
 
-.windChill {
-    grid-row: 2 / 3;
-    grid-column: 2 / 3;
-}
-.windChill::before {
-    content: 'wind chill'
-}
-
 .currentHumidity {
     grid-row: 2 / 3;
-    grid-column: 3 / 4;
+    grid-column: 2 / 3;
 }
 .currentHumidity::before {
     content: 'humidity';
@@ -185,6 +177,17 @@
     flex-direction: row;
 }
 
+/* & daylight bar */
+
+.dayHoursDesc {
+    color: var(--mediumBlue);
+    font-weight: var(--fontLight);
+}
+
+.dayHoursDesc > span:first-child {
+    font-weight: var(--fontBold);
+}
+
 .lightBar {
     display: flex;
     flex-direction: column;
@@ -192,13 +195,13 @@
 }
 
 .lightBar {
+    --height: 10px;
     flex: 1;
     display: flex;
     align-items: center;
 }
 
 .lightBarWrap {
-    --height: 10px;
     border:1px solid var(--mediumBlueOpacity);
     height: var(--height);
     border-radius: 20px;
@@ -223,7 +226,9 @@
     box-shadow: 0 0 50px var(--mediumBlueOpacity);
 }
 
-.bar > div {
+.bar > div, 
+.riseSect > div:first-child, 
+.setSect > div:first-child {
     height: calc(var(--height) * .8);
     aspect-ratio: 1 / 1;
     border-radius: 20px;
@@ -234,6 +239,44 @@
 }
 .set {
     background-color: var(--blue);
+}
+
+.timeSectRiseSet {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.riseSect, .setSect {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    column-gap: 5px;
+}
+.riseSect .rise, .setSect .set {
+    margin: 5px 0 0 0;
+}
+
+.riseTime, .setTime {
+    display: flex;
+    flex-direction: column;
+    color: var(--mediumBlue);
+}
+
+.riseTime::before, .setTime::before {
+    font-size: 14px;
+    color: var(--mediumTeal);
+    font-weight: var(--fontReg);
+}
+
+.riseTime::before {
+    content: "sunrise";
+}
+.setTime::before {
+    content: 'sunset';
 }
 
 .sect2Right {
@@ -248,5 +291,19 @@
         flex-direction: column;
         align-items: center;
         row-gap: 20px;
+    }
+
+    .sect1Right {
+        width: 85%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1em;
+    }
+
+    .currentIcon, .currentDesc {
+        flex: 1;
+    }
+    .currentIcon {
+        --size: 85px;
     }
 }

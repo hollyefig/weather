@@ -137,9 +137,7 @@ export const Output = ({ selectTown, weather, deg }) => {
                   <div className='feelsLike'>
                     {Math.floor(weather.current.feels_like)}
                   </div>
-                  <div className='windChill'>
-                    {Math.floor(weather.current.wind_deg)}
-                  </div>
+
                   <div className='currentHumidity'>
                     <span>
                       {weather.current.humidity}
@@ -160,8 +158,16 @@ export const Output = ({ selectTown, weather, deg }) => {
                       <div className='set'></div>
                     </div>
                   </div>
-                  <div className='riseTime'>{riseSet && riseSet[0]}</div>
-                  <div className='riseTime'>{riseSet && riseSet[1]}</div>
+                  <div className='timeSectRiseSet'>
+                    <div className='riseSect'>
+                      <div className='rise'></div>
+                      <div className='riseTime'>{riseSet && riseSet[0]}</div>
+                    </div>
+                    <div className='setSect'>
+                      <div className='set'></div>
+                      <div className='setTime'>{riseSet && riseSet[1]}</div>
+                    </div>
+                  </div>
                 </div>
                 <div className='sect2Right'>right</div>
               </div>
