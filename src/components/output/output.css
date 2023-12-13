@@ -178,14 +178,11 @@
 /* & daylight bar */
 
 .currentSect2 {
-  grid-row: 2 / 3;
-  grid-column: 1 / 2;
-  max-width: 460px;
+  max-width: 390px;
   width: 100%;
   /* border-top: 1px solid var(--mediumTeal); */
   display: flex;
   flex-direction: row;
-  padding: 0 2em;
 }
 
 .dayHoursDesc {
@@ -304,6 +301,7 @@
     flex-direction: column;
     align-items: center;
     row-gap: 20px;
+    padding: 0;
   }
 
   .sect1Right {
@@ -337,6 +335,7 @@
 
   .currentSect2 {
     flex-direction: column;
+    padding: 0;
   }
   .currentDesc2 {
     justify-content: flex-start;
@@ -350,5 +349,13 @@
 
   .icon {
     min-width: 87px;
+  }
+
+  .currentDesc > span {
+    font-size: 20px;
+  }
+
+  .currentDesc2 > div {
+    --size: 25px;
   }
 }

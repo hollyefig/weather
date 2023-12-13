@@ -172,7 +172,6 @@ export const Output = ({ selectTown, weather, deg }) => {
                     </div>
                   </div>
                 </div>
-
               </div>
               <div className="currentSect3">3</div>
             </div>
