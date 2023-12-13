@@ -1,313 +1,354 @@
 .output {
-    margin: var(--inputHeight) 0 0 0;
-    padding: 1em;
+  margin: var(--inputHeight) 0 0 0;
+  padding: 1em;
 }
 
 .sect1 {
-    /* border:1px solid white; */
-    width: 100%;
-    display: flex;
-    flex-direction: row;
+  /* border:1px solid white; */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 30px;
+  padding: 0 1em;
 }
 
 /* & LEFT SECT  */
 .sect1Left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  --size: 210px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .mainTempWrap {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 .mainTempWrap > span {
-    color: var(--white);
+  color: var(--white);
 }
 
 .temp {
-    --size: 210px;
-    font-size: var(--size);
-    line-height: var(--size);
-    font-weight: var(--fontBold);
-    text-shadow: 3px 3px 98px #4288b4b0;
+  font-size: var(--size);
+  line-height: var(--size);
+  font-weight: var(--fontBold);
+  text-shadow: 3px 3px 98px #4288b4b0;
 }
 
 .deg {
-    font-size: 40px;
-    letter-spacing: -4px;
-    font-weight: var(--fontBold);
-    margin: 5% 0 0 0;
-    text-shadow: 3px 3px 28px #4288b4b0;
+  font-size: calc(var(--size) / 5.25);
+  letter-spacing: -4px;
+  font-weight: var(--fontBold);
+  margin: 5% 0 0 0;
+  text-shadow: 3px 3px 28px #4288b4b0;
 }
 
 .locationDataWrap {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-.loc1 {  
-    font-weight: var(--fontBold);
-    color: var(--mediumBlue);
-    font-size: 40px;
-    padding: 0 0 10px 0;
-    border-bottom: 1px solid var(--mediumBlue);
+.loc1 {
+  font-weight: var(--fontBold);
+  color: var(--mediumBlue);
+  font-size: calc(var(--size) / 5.25);
+  padding: 0 0 10px 0;
+  border-bottom: 1px solid var(--mediumBlue);
 }
 
-.loc2 {  
-    padding: 10px 0 5px 0;
-    font-style: italic;
-    color: var(--mediumTeal);
+.loc2 {
+  padding: 10px 0 5px 0;
+  font-style: italic;
+  color: var(--mediumTeal);
 }
 
 .countrySect {
-    display: flex;
-    flex-direction: row;
-    column-gap: 5px;
-    color: var(--mediumTeal);
+  display: flex;
+  flex-direction: row;
+  column-gap: 5px;
+  color: var(--mediumTeal);
 }
 
-.loc3 { 
-    text-transform: uppercase;
-    font-weight: var(--fontBold);
+.loc3 {
+  text-transform: uppercase;
+  font-weight: var(--fontBold);
 }
 
 .flag {
-    border-radius: 3px;
+  border-radius: 3px;
 }
-
-
 
 /* & RIGHT SECT  */
 .sect1Right {
-    flex: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 }
 
 .currentSect1 {
-    display: flex;
-    flex-direction: row;
-    column-gap: 5%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 20px;
 }
 
 .currentIcon {
-    --size: 100px;
-    width: var(--size);
+  --size: 100px;
+  width: var(--size);
 }
 
 .currentIcon svg {
-    filter: drop-shadow(2px 2px 30px var(--mediumBlue));
+  filter: drop-shadow(2px 2px 30px var(--mediumBlue));
 }
 
 .currentIcon svg * {
-    fill: var(--white);
-    stroke: var(--white);
+  fill: var(--white);
+  stroke: var(--white);
 }
 
 .icon {
-    width: 100%;
-    max-height: var(--size);
-    height: auto;
+  width: 100%;
+  max-height: var(--size);
+  height: auto;
 }
 
 .currentDesc {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-    grid-template-rows: 25px auto;
-    width: 100%;
-    column-gap: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: -moz-fit-content;
+  width: fit-content;
+  column-gap: 20px;
 }
 
 .currentDesc > span {
-    grid-row: 1 / 2;
-    grid-column: 1 / 3;
-    font-size: 17px;
-    font-weight: var(--fontBold);
-    color: #fff;
-    text-shadow: 0px 0px 36px var(--blue);
+  font-size: 27px;
+  font-weight: var(--fontBold);
+  color: #fff;
+  text-shadow: 0px 0px 36px var(--blue);
+  display: block;
 }
 
-.currentDesc > div {
-    display: flex;
-    flex-direction: column;
-    --size: 40px;
-    font-size: var(--size);
-    line-height: calc(var(--size) * .7);
-    font-weight: var(--fontBold);
-    color: var(--mediumBlue);
+.currentDesc2 {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  column-gap: 20px;
 }
 
-.feelsLike::before, .windChill::before, .currentHumidity::before {
-    font-size: calc(var(--size) / 3);
-    font-weight: var(--fontReg);
-    color: var(--mediumBlue)
+.currentDesc2 > div {
+  --heightOffset: 10px;
+  display: flex;
+  flex-direction: column;
+  --size: 32px;
+  font-size: var(--size);
+  line-height: calc(var(--size) * 0.7);
+  font-weight: var(--fontBold);
+  color: var(--mediumBlue);
+  margin: 0 0 var(--heightOffset) 0;
 }
 
-.feelsLike {
-    grid-row: 2 / 3;
-    grid-column: 1 / 2;
+.feelsLike::before,
+.windChill::before,
+.currentHumidity::before {
+  font-size: calc(var(--size) / 3);
+  font-weight: var(--fontReg);
+  color: var(--mediumBlue);
 }
+
 .feelsLike::before {
-    content: 'feels like'; 
-}
-
-.currentHumidity {
-    grid-row: 2 / 3;
-    grid-column: 2 / 3;
+  content: "feels like";
 }
 .currentHumidity::before {
-    content: 'humidity';
+  content: "humidity";
 }
 
 .currentHumidity sup {
-    font-size: 18px;
-    line-height: 0px;
-    padding: 0 3px;
-}
-
-
-.currentSect2 {
-    width: 100%;
-    /* border-top: 1px solid var(--mediumTeal); */
-    padding: 1em 0;
-    display: flex;
-    flex-direction: row;
+  font-size: 18px;
+  line-height: 0px;
+  padding: 0 3px;
 }
 
 /* & daylight bar */
 
+.currentSect2 {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  max-width: 460px;
+  width: 100%;
+  /* border-top: 1px solid var(--mediumTeal); */
+  display: flex;
+  flex-direction: row;
+  padding: 0 2em;
+}
+
 .dayHoursDesc {
-    color: var(--mediumBlue);
-    font-weight: var(--fontLight);
+  color: var(--mediumBlue);
+  font-weight: var(--fontLight);
 }
 
 .dayHoursDesc > span:first-child {
-    font-weight: var(--fontBold);
+  font-weight: var(--fontBold);
 }
 
 .lightBar {
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
 
 .lightBar {
-    --height: 10px;
-    flex: 1;
-    display: flex;
-    align-items: center;
+  --height: 10px;
+  flex: 1;
+  display: flex;
+  align-items: center;
 }
 
 .lightBarWrap {
-    border:1px solid var(--mediumBlueOpacity);
-    height: var(--height);
-    border-radius: 20px;
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border: 1px solid var(--mediumBlueOpacity);
+  height: var(--height);
+  border-radius: 20px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bar {
-    --barHeight:calc(var(--height) * 1.3);
-    height: var(--barHeight);
-    width: 40%;
-    background-color: var(--white);
-    border-radius: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5px;
-    box-shadow: 0 0 50px var(--mediumBlueOpacity);
+  --barHeight: calc(var(--height) * 1.3);
+  height: var(--barHeight);
+  width: 40%;
+  background-color: var(--white);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+  box-shadow: 0 0 50px var(--mediumBlueOpacity);
 }
 
-.bar > div, 
-.riseSect > div:first-child, 
+.bar > div,
+.riseSect > div:first-child,
 .setSect > div:first-child {
-    height: calc(var(--height) * .8);
-    aspect-ratio: 1 / 1;
-    border-radius: 20px;
+  height: calc(var(--height) * 0.8);
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
 }
 
 .rise {
-    background-color: var(--mediumTeal);
+  background-color: var(--mediumTeal);
 }
 .set {
-    background-color: var(--blue);
+  background-color: var(--blue);
 }
 
 .timeSectRiseSet {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
-.riseSect, .setSect {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    column-gap: 5px;
+.riseSect,
+.setSect {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  column-gap: 5px;
 }
-.riseSect .rise, .setSect .set {
-    margin: 5px 0 0 0;
-}
-
-.riseTime, .setTime {
-    display: flex;
-    flex-direction: column;
-    color: var(--mediumBlue);
+.riseSect .rise,
+.setSect .set {
+  margin: 5px 0 0 0;
 }
 
-.riseTime::before, .setTime::before {
-    font-size: 14px;
-    color: var(--mediumTeal);
-    font-weight: var(--fontReg);
+.riseTime,
+.setTime {
+  display: flex;
+  flex-direction: column;
+  color: var(--mediumBlue);
+}
+
+.riseTime::before,
+.setTime::before {
+  font-size: 14px;
+  color: var(--mediumTeal);
+  font-weight: var(--fontReg);
 }
 
 .riseTime::before {
-    content: "sunrise";
+  content: "sunrise";
 }
 .setTime::before {
-    content: 'sunset';
+  content: "sunset";
 }
 
-.sect2Right {
-    flex: 1;
+.currentSect3 {
+  grid-row: 3 / 4;
+  grid-column: 1 / 2;
 }
-
 
 /* ~ RESPONSIVE  */
 
 @media only screen and (max-width: 768px) {
-    .sect1 {
-        flex-direction: column;
-        align-items: center;
-        row-gap: 20px;
-    }
+  .sect1 {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+  }
 
-    .sect1Right {
-        width: 85%;
-        display: flex;
-        flex-direction: column;
-        row-gap: 1em;
-    }
+  .sect1Right {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1em;
+  }
 
-    .currentIcon, .currentDesc {
-        flex: 1;
-    }
-    .currentIcon {
-        --size: 85px;
-    }
-    
-    .currentSect2 {
-        flex-direction: column;
-    }
+  .currentIcon,
+  .currentDesc {
+    flex: 1;
+  }
+  .currentIcon {
+    --size: 87px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex: 0.7;
+  }
+
+  .icon {
+    max-width: 87px;
+  }
+
+  .currentSect1 {
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .currentSect2 {
+    flex-direction: column;
+  }
+  .currentDesc2 {
+    justify-content: flex-start;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .sect1Left {
+    --size: 50dvw;
+  }
+
+  .icon {
+    min-width: 87px;
+  }
 }

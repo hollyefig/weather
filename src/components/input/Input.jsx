@@ -42,6 +42,11 @@ export const Input = ({
       }
     }
   };
+// ! make input text disappear
+  const clickInput = (e) => {
+    e.target.value !== '' && (e.target.value = '')
+
+  }
 
   return (
     <div className='input'>
@@ -53,6 +58,7 @@ export const Input = ({
           onInput={(e) => setInputTown(e.target.value)}
           className='inputTownZip'
           placeholder='city or ZIP'
+          onClick={(e) => clickInput(e)}
         />
         {/*  checkbox section */}
         <div className='checkboxSection'>

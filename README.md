@@ -4,7 +4,7 @@
 
 ## APIs & Plugins
 
-Weather API - <a href="https://openweathermap.org/api/one-call-3?">openweahtermap.org</a>
+Weather API - <a href="https://openweathermap.org/api/one-call-3?">openweathermap.org</a>
 
 Country code, flag API - <a href="https://restcountries.com/">restcountries.com</a>
 

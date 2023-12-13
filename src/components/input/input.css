@@ -1,110 +1,111 @@
-
-
 .input {
-    width: 100%;
-    padding: 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    row-gap: 10px;
-    position: absolute;
-    top: 0;
-    z-index: 5;
-    --inputMaxWidth: 370px;
-    
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 10px;
+  position: absolute;
+  top: 0;
+  z-index: 5;
+  --inputMaxWidth: 370px;
 }
 
 .inputDefault {
-    display: grid;
-    max-width: var(--inputMaxWidth);
-    width: 100%;
-    row-gap: 5px;
-    column-gap: 10px;
-    grid-template-rows: 1fr 20px;
-    grid-template-columns: 1fr 45px;
-    
+  display: grid;
+  max-width: var(--inputMaxWidth);
+  width: 100%;
+  row-gap: 5px;
+  column-gap: 10px;
+  grid-template-rows: 1fr 20px;
+  grid-template-columns: 1fr 45px;
 }
 
 .inputTownZip {
-    grid-row: 1 / 2;
-    grid-column: 1 / 2;
-    padding: .7em;
-    border: none;
-    border-radius: 5px;
-    width: 100%;
-    background-color: var(--inputTownZipBackground);
-    font-size: 18px;
-    color: var(--inputColor);
-    text-align: center;
-    font-family: var(--defaultFont);
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  padding: 0.7em;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  background-color: var(--inputTownZipBackground);
+  font-size: 18px;
+  color: var(--inputColor);
+  text-align: center;
+  font-family: var(--defaultFont);
 }
 
 .inputTownZip::placeholder {
-    color: var(--mediumBlue);
-    font-family: var(--defaultFont);
-    font-style: italic;
+  color: var(--mediumBlue);
+  font-family: var(--defaultFont);
+  font-style: italic;
 }
 
 .inputTownZip:focus {
-    outline: none;
+  outline: none;
+}
+
+.inputTownZip:focus::placeholder {
+  color: transparent;
 }
 
 .checkboxSection {
-    grid-row: 2 / 3;
-    grid-column: 1 / 2;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 5px;
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 5px;
 }
 
 .checkboxSection > input[type="checkbox"] {
-    cursor: pointer;
-    appearance: none;
-    border: 1px solid var(--white);
-    background-color: var(--white);
-    padding: 5px;
-    border-radius: 5px;
+  cursor: pointer;
+  appearance: none;
+  border: 1px solid var(--white);
+  background-color: var(--white);
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .checkZip {
-    cursor: pointer;
-    font-size: 12px;
-    color: var(--mediumBlue);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--mediumBlue);
 }
 
 .countryDropdown {
-    height: 0;
-    max-width: var(--inputMaxWidth);
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
+  height: 0;
+  max-width: var(--inputMaxWidth);
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .btnEnter {
-    grid-row: 1 / 2;
-    grid-column: 2 / 3;
-    cursor: pointer;
-    border:2px solid var(--white);
-    border-radius: 25px;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: scale(.9);
-    transition: box-shadow .2s ease-out ;
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+  cursor: pointer;
+  border: 2px solid var(--white);
+  border-radius: 25px;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0.9);
+  transition: box-shadow 0.2s ease-out;
 }
 
 .btnEnter .material-symbols-outlined {
-    color: var(--white);
-    font-size: 30px;
-    padding: 0 0 0 2px;
+  color: var(--white);
+  font-size: 30px;
+  padding: 0 0 0 2px;
 }
 
 .btnEnter:hover {
-    --shadowColor: #ffffff78;
-    box-shadow: 0px 0px 8px var(--shadowColor), 0px 0px 8px var(--shadowColor) inset;
+  --shadowColor: #ffffff78;
+  box-shadow: 0px 0px 8px var(--shadowColor),
+    0px 0px 8px var(--shadowColor) inset;
 }
 
 /* .btnEnter:hover .material-symbols-outlined {

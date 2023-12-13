@@ -83,7 +83,8 @@ export const Output = ({ selectTown, weather, deg }) => {
   useEffect(() => {
     if (selectTown && weather) {
       let computed = window.getComputedStyle(tempDivWidth.current);
-      locDatWrap.current.style.width = computed.width;
+      locDatWrap.current.style.maxWidth = computed.width;
+      locDatWrap.current.style.width = '100%';
       setLightHours(daylightHours(weather.current));
 
       const riseSetTimes = calculateLocalTime(
@@ -134,17 +135,19 @@ export const Output = ({ selectTown, weather, deg }) => {
                       }
                     })}
                   </span>
+                  <div className="currentDesc2">
                   <div className='feelsLike'>
                     {Math.floor(weather.current.feels_like)}
                   </div>
-
                   <div className='currentHumidity'>
                     <span>
                       {weather.current.humidity}
                       <sup>%</sup>
                     </span>
                   </div>
+                  </div>
                 </div>
+
               </div>
               <div className='currentSect2'>
                 <div className='lightBar'>
@@ -169,8 +172,9 @@ export const Output = ({ selectTown, weather, deg }) => {
                     </div>
                   </div>
                 </div>
-                <div className='sect2Right'>right</div>
+
               </div>
+              <div className="currentSect3">3</div>
             </div>
           </div>
         </>
