@@ -80,6 +80,13 @@
 
 .flag {
   border-radius: 3px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+}
+
+.flag > img {
+  width:20px;
 }
 
 /* & RIGHT SECT  */
@@ -389,6 +396,10 @@
 }
 
 @media only screen and (max-width: 425px) {
+  
+  .inputTownZip {
+    padding: 0.2em;
+  }
   .sect1Left {
     --size: 50dvw;
   }

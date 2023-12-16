@@ -6,7 +6,7 @@ body {
   background-image: url(./IMGs/defaultBG.png);
   background-repeat: no-repeat;
   background-size: 100% 100vh;
-  --inputHeight: 140px;
+  --inputHeight: 14vh;
 }
 
 :root {
@@ -40,5 +40,11 @@ code {
 @media only screen and (max-width: 768px) {
   body {
     background-size: 100% 200dvh;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  body {
+    --inputHeight: 10vh;
   }
 }

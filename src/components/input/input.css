@@ -1,15 +1,16 @@
 .input {
   width: 100%;
-  padding: 1em;
+  padding: 1em 1em .5em 1em;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  row-gap: 10px;
   position: absolute;
   top: 0;
   z-index: 5;
   --inputMaxWidth: 370px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .inputDefault {

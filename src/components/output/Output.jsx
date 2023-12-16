@@ -133,7 +133,7 @@ export const Output = ({ selectTown, weather, deg }) => {
                 <div className='loc2'>{selectTown.state}</div>
                 <div className='countrySect'>
                   <div className='flag'>
-                    <img alt={countryName} src={countryFlag} width='15' />
+                    <img alt={countryName} src={countryFlag} />
                   </div>
                   <div className='loc3'>{countryName}</div>
                 </div>
