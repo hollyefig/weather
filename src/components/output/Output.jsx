@@ -2,15 +2,19 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { getCountryName } from "../../APIcalls";
 import "./output.css";
 import { Svg } from "./SVG/Svg";
+import { Hourly } from "./children/Hourly";
 
 export const Output = ({ selectTown, weather, deg }) => {
+  // & States
   const [countryName, setCountryName] = useState(null);
   const [countryFlag, setCountryFlag] = useState("");
+  const [lightHours, setLightHours] = useState(null);
+  const [riseSet, setRiseSet] = useState(null);
+  const [hourlyArr, setHourlyArr] = useState(null);
+  // & Refs
   const tempDivWidth = useRef(null);
   const locDatWrap = useRef(null);
-  const [lightHours, setLightHours] = useState(null);
   const lightBar = useRef(null);
-  const [riseSet, setRiseSet] = useState(null);
 
   // ! get country name
   const toCountryName = async () => {
@@ -67,7 +71,6 @@ export const Output = ({ selectTown, weather, deg }) => {
       const formattedTime = new Intl.DateTimeFormat("en-US", options).format(
         date[i]
       );
-
       arr.push(formattedTime.replace(/\bUTC\b/, "").trim());
     }
     return arr;
@@ -75,28 +78,45 @@ export const Output = ({ selectTown, weather, deg }) => {
 
   // get country name
   if (weather) {
-    console.log("logging", weather);
+    // console.log("logging", weather);
     toCountryName();
   }
 
-  // * make location data be same width as Temp div
+  // * USE EFFECT
   useEffect(() => {
     if (selectTown && weather) {
+      // ? set computer width for town/state/country to match temp
       let computed = window.getComputedStyle(tempDivWidth.current);
       locDatWrap.current.style.maxWidth = computed.width;
-      locDatWrap.current.style.width = '100%';
+      locDatWrap.current.style.width = "100%";
+      // ? set hours of light in day
       setLightHours(daylightHours(weather.current));
 
+      // ? get rise/set times
       const riseSetTimes = calculateLocalTime(
         [weather.current.sunrise, weather.current.sunset],
         weather.timezone_offset
       );
-
+      // format light/set times to be local to the region
       const gmtFormattedTime = formatTimeInTimeZone(riseSetTimes, "GMT");
-
+      // place rise/set data in this state variable
       setRiseSet(gmtFormattedTime);
+
+      // ? get next 12 hrs
+      let hrly = [];
+      for (let i = 0; i < 12; i++) {
+        hrly.push(weather.hourly[i]);
+      }
+      setHourlyArr(hrly);
     }
-  }, [daylightHours, setLightHours, weather, selectTown, setRiseSet]);
+  }, [
+    daylightHours,
+    setLightHours,
+    weather,
+    selectTown,
+    setRiseSet,
+    setHourlyArr,
+  ]);
 
   return (
     <div className='output'>
@@ -120,6 +140,7 @@ export const Output = ({ selectTown, weather, deg }) => {
               </div>
             </div>
             <div className='sect1Right'>
+              {/* CURRENT CONDITIONS, TEMP */}
               <div className='currentSect1'>
                 <div className='currentIcon'>
                   <Svg weather={weather.current.weather[0].main} />
@@ -135,20 +156,20 @@ export const Output = ({ selectTown, weather, deg }) => {
                       }
                     })}
                   </span>
-                  <div className="currentDesc2">
-                  <div className='feelsLike'>
-                    {Math.floor(weather.current.feels_like)}
-                  </div>
-                  <div className='currentHumidity'>
-                    <span>
-                      {weather.current.humidity}
-                      <sup>%</sup>
-                    </span>
-                  </div>
+                  <div className='currentDesc2'>
+                    <div className='feelsLike'>
+                      {Math.floor(weather.current.feels_like)}
+                    </div>
+                    <div className='currentHumidity'>
+                      <span>
+                        {weather.current.humidity}
+                        <sup>%</sup>
+                      </span>
+                    </div>
                   </div>
                 </div>
-
               </div>
+              {/* SUNRISE & SUNSET */}
               <div className='currentSect2'>
                 <div className='lightBar'>
                   <div className='dayHoursDesc'>
@@ -173,7 +194,24 @@ export const Output = ({ selectTown, weather, deg }) => {
                   </div>
                 </div>
               </div>
-              <div className="currentSect3">3</div>
+              {/* HOURLY SECT  */}
+              <div className='currentSect3'>
+                <div className='hourlySect'>
+                  {hourlyArr &&
+                    hourlyArr.map((e, index) => {
+                      return (
+                        <Hourly
+                          key={index}
+                          num={index}
+                          data={e}
+                          calculateLocalTime={calculateLocalTime}
+                          formatTimeInTimeZone={formatTimeInTimeZone}
+                          weather={weather}
+                        />
+                      );
+                    })}
+                </div>
+              </div>
             </div>
           </div>
         </>

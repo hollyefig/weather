@@ -87,7 +87,9 @@
   flex: 1;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: repeat(3, min-content);
+  row-gap: 10px;
+  --maxWidth: 390px;
 }
 
 .currentSect1 {
@@ -106,7 +108,7 @@
   filter: drop-shadow(2px 2px 30px var(--mediumBlue));
 }
 
-.currentIcon svg * {
+.currentIcon svg {
   fill: var(--white);
   stroke: var(--white);
 }
@@ -178,7 +180,7 @@
 /* & daylight bar */
 
 .currentSect2 {
-  max-width: 390px;
+  max-width: var(--maxWidth);
   width: 100%;
   /* border-top: 1px solid var(--mediumTeal); */
   display: flex;
@@ -294,6 +296,49 @@
   grid-column: 1 / 2;
 }
 
+/* & Hourly section */
+
+.currentSect3 {
+  max-width: var(--maxWidth);
+  width: 100%;
+}
+
+.hourlySect {
+  display: grid;
+  grid-auto-flow: column;
+  overflow-x: scroll;
+}
+
+.hourlySect > div {
+  width: 85px;
+  padding:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hourlyIcon .icon {
+  height: 30px;
+  aspect-ratio: 1 / 1;
+}
+.hourlyIcon svg {
+  fill: var(--mediumBlueOpacity);
+  stroke: var(--mediumBlueOpacity);
+}
+
+.hourlyHour {
+  padding: 10px 0 0 0;
+  font-weight: var(--fontBold);
+  color: var(--mediumBlue);
+}
+
+.hourlyStatus {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--mediumTeal);
+}
+
 /* ~ RESPONSIVE  */
 
 @media only screen and (max-width: 768px) {
@@ -305,7 +350,8 @@
   }
 
   .sect1Right {
-    width: 85%;
+    max-width: 560px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -347,7 +393,7 @@
     --size: 50dvw;
   }
 
-  .icon {
+  .currentIcon .icon {
     min-width: 87px;
   }
 
@@ -358,4 +404,5 @@
   .currentDesc2 > div {
     --size: 25px;
   }
+
 }
