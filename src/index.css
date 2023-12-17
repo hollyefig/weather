@@ -7,6 +7,7 @@ body {
   background-repeat: no-repeat;
   background-size: 100% 100vh;
   --inputHeight: 14vh;
+  
 }
 
 :root {
@@ -20,10 +21,11 @@ body {
   --white: #fff;
   --lightTeal: #8ACDD0;
   --mediumTeal: #0eb1b5;
-  --mediumBlue: #487896;
+  --lightBlue: #9ac9e7;
+  --mediumBlue: #4a88af;
   --blue: #125078;
   --mediumBlueOpacity: #487896a1;
-  --purple: #3e0459;
+  --purple: #1b00c0;
 }
 
 * {

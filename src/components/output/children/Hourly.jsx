@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Svg } from "../SVG/Svg";
 
 export const Hourly = ({
@@ -18,15 +18,13 @@ export const Hourly = ({
     .replace(`["`, "")
     .replace(`"]`, "");
 
-  // * USE EFFECT
-  useEffect(() => {});
   return (
     <div className={`hourly${num}`}>
       <div className='hourlyIcon'>
         <Svg weather={data.weather[0].main} />
       </div>
+      <div className='hourlyTemp'>{Math.floor(data.temp)}˚</div>
       <div className='hourlyHour'>{hour}</div>
-      <div className='hourlyStatus'>{data.weather[0].main}</div>
     </div>
   );
 };

@@ -1,15 +1,20 @@
 .output {
   margin: var(--inputHeight) 0 0 0;
-  padding: 1em;
+  padding: 1em 0 0 0;
+  display: grid;
+  grid-template-rows: min-content auto;
+  grid-template-columns: 100%;
+  row-gap: 4vh;
+  height: calc(100vh - var(--inputHeight));
 }
 
 .sect1 {
-  /* border:1px solid white; */
   width: 100%;
   display: flex;
   flex-direction: row;
   column-gap: 30px;
   padding: 0 1em;
+  
 }
 
 /* & LEFT SECT  */
@@ -318,7 +323,7 @@
 
 .hourlySect > div {
   width: 85px;
-  padding:10px;
+  padding:0 0 10px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -334,16 +339,17 @@
   stroke: var(--mediumBlueOpacity);
 }
 
-.hourlyHour {
-  padding: 10px 0 0 0;
+.hourlyTemp {
+  padding: 5px 0 0 0;
   font-weight: var(--fontBold);
   color: var(--mediumBlue);
+  margin: 0 0 0 7px;
+  font-size: 18px;
 }
 
-.hourlyStatus {
-  font-size: 14px;
-  font-style: italic;
+.hourlyHour {
   color: var(--mediumTeal);
+  font-size: 14px;
 }
 
 /* ~ RESPONSIVE  */
@@ -363,6 +369,7 @@
     flex-direction: column;
     align-items: center;
     row-gap: 1em;
+    padding: 0 10px;
   }
 
   .currentIcon,

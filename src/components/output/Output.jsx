@@ -3,6 +3,7 @@ import { getCountryName } from "../../APIcalls";
 import "./output.css";
 import { Svg } from "./SVG/Svg";
 import { Hourly } from "./children/Hourly";
+import { Sect2 } from "./children/Sect2";
 
 export const Output = ({ selectTown, weather, deg }) => {
   // & States
@@ -104,7 +105,7 @@ export const Output = ({ selectTown, weather, deg }) => {
 
       // ? get next 12 hrs
       let hrly = [];
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 19; i++) {
         hrly.push(weather.hourly[i]);
       }
       setHourlyArr(hrly);
@@ -158,7 +159,7 @@ export const Output = ({ selectTown, weather, deg }) => {
                   </span>
                   <div className='currentDesc2'>
                     <div className='feelsLike'>
-                      {Math.floor(weather.current.feels_like)}
+                      {Math.floor(weather.current.feels_like)}˚
                     </div>
                     <div className='currentHumidity'>
                       <span>
@@ -214,6 +215,8 @@ export const Output = ({ selectTown, weather, deg }) => {
               </div>
             </div>
           </div>
+          {/* SECT 2 */}
+          <Sect2 weather={weather} calculateLocalTime={calculateLocalTime} />
         </>
       )}
     </div>
