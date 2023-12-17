@@ -351,8 +351,8 @@
   aspect-ratio: 1 / 1;
 }
 .hourlyIcon svg {
-  fill: var(--mediumBlueOpacity);
-  stroke: var(--mediumBlueOpacity);
+  fill: var(--lightBlue);
+  stroke: var(--lightBlue);
 }
 
 .hourlyTemp {
