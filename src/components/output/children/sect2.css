@@ -68,7 +68,7 @@
     justify-content: space-between;
     column-gap: 18px;
     font-weight: var(--fontBold);
-    color: var(--purple);
+    color: var(--lightTeal);
 }
 
 .dailyHighLow > div {

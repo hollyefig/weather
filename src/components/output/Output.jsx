@@ -12,6 +12,8 @@ export const Output = ({ selectTown, weather, deg }) => {
   const [lightHours, setLightHours] = useState(null);
   const [riseSet, setRiseSet] = useState(null);
   const [hourlyArr, setHourlyArr] = useState(null);
+  const [currentDate, setCurrentDate] = useState(null);
+  const [currentTime, setCurrentTime] = useState(null);
   // & Refs
   const tempDivWidth = useRef(null);
   const locDatWrap = useRef(null);
@@ -109,6 +111,20 @@ export const Output = ({ selectTown, weather, deg }) => {
         hrly.push(weather.hourly[i]);
       }
       setHourlyArr(hrly);
+
+      // ? get current date, time
+      let curr = calculateLocalTime(
+        [weather.current.dt],
+        weather.timezone_offset
+      );
+      setCurrentDate(...curr);
+      let time = new Intl.DateTimeFormat("en-GB", {
+        hour: "numeric",
+        minute: "numeric",
+        timeZone: "GMT",
+        timeZoneName: "short",
+      }).format(...curr);
+      setCurrentTime(time);
     }
   }, [
     daylightHours,
@@ -117,7 +133,34 @@ export const Output = ({ selectTown, weather, deg }) => {
     selectTown,
     setRiseSet,
     setHourlyArr,
+    setCurrentDate,
+    setCurrentTime,
   ]);
+
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  let daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   return (
     <div className='output'>
@@ -142,6 +185,19 @@ export const Output = ({ selectTown, weather, deg }) => {
             </div>
             <div className='sect1Right'>
               {/* CURRENT CONDITIONS, TEMP */}
+              {currentDate && (
+                <div className='currentTime'>
+                  as of
+                  <span>{currentTime.replace(" UTC", "")},</span>
+                  <span>
+                    {daysOfWeek[currentDate.getDay()]} {currentDate.getDate()}{" "}
+                    {months[currentDate.getMonth()]} {currentDate.getFullYear()}
+                  </span>
+                  <span>|</span>
+                  <span>{selectTown.name} local time</span>
+                </div>
+              )}
+
               <div className='currentSect1'>
                 <div className='currentIcon'>
                   <Svg weather={weather.current.weather[0].main} />
@@ -216,7 +272,7 @@ export const Output = ({ selectTown, weather, deg }) => {
             </div>
           </div>
           {/* SECT 2 */}
-          <Sect2 weather={weather} calculateLocalTime={calculateLocalTime} />
+          <Sect2 weather={weather} months={months} daysOfWeek={daysOfWeek} />
         </>
       )}
     </div>

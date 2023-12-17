@@ -2,7 +2,7 @@ import React from "react";
 import "./sect2.css";
 import { Svg } from "../SVG/Svg";
 
-export const Sect2 = ({ weather }) => {
+export const Sect2 = ({ weather, months, daysOfWeek }) => {
   // ! get local day
   const getLocal = (timeStamp, timezoneOffset) => {
     // Convert UTC timestamp to milliseconds
@@ -22,31 +22,6 @@ export const Sect2 = ({ weather }) => {
   for (let i = 0; i < weather.daily.length; i++) {
     weekArr.push(weather.daily[i]);
   }
-
-  let daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  let months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   return (
     <div className='sect2'>

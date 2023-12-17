@@ -99,10 +99,27 @@
   flex: 1;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, min-content);
-  row-gap: 10px;
+  grid-template-rows: repeat(4, min-content);
+  row-gap: 15px;
   --maxWidth: 390px;
 }
+
+.currentTime {
+  padding: 5px 11px;
+  background-color: var(--mediumBlue);
+  width: fit-content;
+  color: var(--white);
+  border-radius: 20px;
+  font-size:10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 5px;
+  flex-wrap: wrap;
+  font-style: italic;
+  /* margin: 0 0 10px 0; */
+}
+
 
 .currentSect1 {
   display: flex;
@@ -304,7 +321,6 @@
 }
 
 .currentSect3 {
-  grid-row: 3 / 4;
   grid-column: 1 / 2;
 }
 
