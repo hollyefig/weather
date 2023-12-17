@@ -26,6 +26,7 @@
 
 .dailyMonthDayNum > div:not(:last-child) {
     display: inline-block;
+    font-size: 12px;
 }
 
 .dailyMonth, .dailyDayNum, .dailyDesc {

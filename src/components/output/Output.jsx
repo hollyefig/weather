@@ -111,12 +111,12 @@ export const Output = ({ selectTown, weather, deg }) => {
       }
       setHourlyArr(hrly);
 
-      // ? get current date, time
+      // ? get current local date
       let curr = calculateLocalTime(
         [weather.current.dt],
         weather.timezone_offset
       );
-
+      // format local date to display info
       let time = new Intl.DateTimeFormat("en-GB", {
         minute: "numeric",
         hour: "numeric",
@@ -138,31 +138,6 @@ export const Output = ({ selectTown, weather, deg }) => {
     setHourlyArr,
     setCurrentTime,
   ]);
-
-  let months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  let daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
 
   return (
     <div className='output'>
@@ -270,7 +245,7 @@ export const Output = ({ selectTown, weather, deg }) => {
             </div>
           </div>
           {/* SECT 2 */}
-          <Sect2 weather={weather} months={months} daysOfWeek={daysOfWeek} />
+          <Sect2 weather={weather} />
         </>
       )}
     </div>
