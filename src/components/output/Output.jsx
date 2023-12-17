@@ -12,7 +12,6 @@ export const Output = ({ selectTown, weather, deg }) => {
   const [lightHours, setLightHours] = useState(null);
   const [riseSet, setRiseSet] = useState(null);
   const [hourlyArr, setHourlyArr] = useState(null);
-  const [currentDate, setCurrentDate] = useState(null);
   const [currentTime, setCurrentTime] = useState(null);
   // & Refs
   const tempDivWidth = useRef(null);
@@ -117,10 +116,14 @@ export const Output = ({ selectTown, weather, deg }) => {
         [weather.current.dt],
         weather.timezone_offset
       );
-      setCurrentDate(...curr);
+
       let time = new Intl.DateTimeFormat("en-GB", {
-        hour: "numeric",
         minute: "numeric",
+        hour: "numeric",
+        day: "numeric",
+        weekday: "long",
+        month: "long",
+        year: "numeric",
         timeZone: "GMT",
         timeZoneName: "short",
       }).format(...curr);
@@ -133,7 +136,6 @@ export const Output = ({ selectTown, weather, deg }) => {
     selectTown,
     setRiseSet,
     setHourlyArr,
-    setCurrentDate,
     setCurrentTime,
   ]);
 
@@ -185,14 +187,10 @@ export const Output = ({ selectTown, weather, deg }) => {
             </div>
             <div className='sect1Right'>
               {/* CURRENT CONDITIONS, TEMP */}
-              {currentDate && (
+              {currentTime && (
                 <div className='currentTime'>
                   as of
                   <span>{currentTime.replace(" UTC", "")},</span>
-                  <span>
-                    {daysOfWeek[currentDate.getDay()]} {currentDate.getDate()}{" "}
-                    {months[currentDate.getMonth()]} {currentDate.getFullYear()}
-                  </span>
                   <span>|</span>
                   <span>{selectTown.name} local time</span>
                 </div>

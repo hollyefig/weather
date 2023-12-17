@@ -35,7 +35,7 @@
 
 .dailyDay {
     font-weight: var(--fontBold);
-    color: var(--purple);
+    color: var(--lightTeal);
     text-transform: uppercase;
 }
 
