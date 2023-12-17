@@ -89,6 +89,7 @@
     content: 'L'
 }
 
+/* & RESPONSIVE  */
 @media only screen and (max-width: 768px) {
 
     .dailySet {
@@ -100,9 +101,13 @@
         flex-direction: row;
         width: 100%;
         column-gap: 0;
-        justify-content: space-evenly;
+        justify-content: space-around;
     }
     .dailySet > div > div {
         width: max-content;
+    }
+
+    .dailyDesc {
+        display: none;
     }
 }
