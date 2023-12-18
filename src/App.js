@@ -165,12 +165,7 @@ function App() {
           setIsUS={setIsUS}
           countryRef={countryRef}
         />
-        <Output
-          selectTown={selectTown}
-          weather={weather}
-          deg={deg}
-          countryRef={countryRef}
-        />
+        <Output selectTown={selectTown} weather={weather} deg={deg} />
       </div>
     </div>
   );

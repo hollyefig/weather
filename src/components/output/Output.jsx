@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { gsap } from "gsap";
+
 import { getCountryName } from "../../APIcalls";
 import "./output.css";
 import { Svg } from "./SVG/Svg";
 import { Hourly } from "./children/Hourly";
 import { Sect2 } from "./children/Sect2";
 
-export const Output = ({ selectTown, weather, deg, countryRef }) => {
+export const Output = ({ selectTown, weather, deg }) => {
   // & States
   const [countryName, setCountryName] = useState(null);
   const [countryFlag, setCountryFlag] = useState("");
@@ -126,21 +126,6 @@ export const Output = ({ selectTown, weather, deg, countryRef }) => {
         timeZone: weather.timezone,
       }).format(date);
       setCurrentDate(time);
-
-      const outputDiv = outputRef.current;
-
-      const dropClose = () => {
-        gsap
-          .timeline({
-            defaults: { duration: 0.5, ease: "power2.out", delay: 0 },
-          })
-          .to(countryRef.current, { overflow: "hidden" })
-          .to(countryRef.current, { height: "0px" }, "<");
-      };
-
-      outputDiv.addEventListener("click", dropClose);
-
-      return () => outputDiv.removeEventListener("click", dropClose);
     }
   }, [
     daylightHours,
@@ -150,7 +135,6 @@ export const Output = ({ selectTown, weather, deg, countryRef }) => {
     setRiseSet,
     setHourlyArr,
     setCurrentDate,
-    countryRef,
   ]);
 
   return (
