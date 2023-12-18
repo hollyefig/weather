@@ -1,4 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
+
+import nightBg from "./IMGs/night.png";
+import sunriseBg from "./IMGs/sunriseBg.png";
+import sunsetBg from "./IMGs/sunsetBg.png";
+import defaultBg from "./IMGs/defaultBG.png";
+
 // get componenets
 import { Input } from "./components/input/Input";
 import { Output } from "./components/output/Output";
@@ -13,6 +19,9 @@ function App() {
   const [countryCode, setCountryCode] = useState(null);
   const [isUS, setIsUS] = useState(true);
   const [deg, setDeg] = useState("˚F");
+  const [themeBg, setThemeBg] = useState(defaultBg);
+
+  const doc = document.documentElement;
 
   // & when town is read
   const townEntered = useCallback(async () => {
@@ -96,28 +105,66 @@ function App() {
     setWeather(loadWeather);
   };
 
-  // ? when enter key is hit
+  // ! determine time of day for visual UI shifts
+  const getDayTime = useCallback(() => {
+    let current = weather.current.dt;
+    let sunrise = weather.current.sunrise;
+    let sunset = weather.current.sunset;
+    let twoHours = 7200;
+
+    // ? dark
+    if (current <= sunrise || current >= sunset + twoHours) {
+      doc.className = "night";
+      setThemeBg(nightBg);
+    }
+    // ? morning
+    else if (current >= sunrise && current <= sunrise + twoHours) {
+      doc.className = "sunrise";
+      setThemeBg(sunriseBg);
+    }
+    // ? daytime (default)
+    else if (current >= sunrise + twoHours && current <= sunset - twoHours) {
+      doc.className = "default";
+      setThemeBg(defaultBg);
+    }
+    // ? sunset
+    else if (current >= sunset - twoHours && current <= sunset + twoHours) {
+      doc.className = "sunset";
+      setThemeBg(sunsetBg);
+    }
+  }, [weather, doc, setThemeBg]);
+
+  // * USE EFFECT
   useEffect(() => {
+    doc.className = "default";
+    // ? when enter key is hit
     const enterKey = (k) => {
       k.key === "Enter" && townEntered();
     };
     document.addEventListener("keydown", enterKey);
 
+    // ? set off country code func
     countryCodeFunc();
+
+    // ? get day time for UI shift
+    weather && getDayTime();
+
     return () => document.removeEventListener("keydown", enterKey);
-  }, [townEntered, countryCodeFunc]);
+  }, [townEntered, countryCodeFunc, getDayTime, weather, doc]);
 
   // * RETURN
   return (
-    <div className='App'>
-      <Input
-        setInputTown={setInputTown}
-        inputCountry={inputCountry}
-        setInputCountry={setInputCountry}
-        townEntered={townEntered}
-        setIsUS={setIsUS}
-      />
-      <Output selectTown={selectTown} weather={weather} deg={deg} />
+    <div className='App' style={{ backgroundImage: `url('${themeBg}')` }}>
+      <div className='backdropBlur'>
+        <Input
+          setInputTown={setInputTown}
+          inputCountry={inputCountry}
+          setInputCountry={setInputCountry}
+          townEntered={townEntered}
+          setIsUS={setIsUS}
+        />
+        <Output selectTown={selectTown} weather={weather} deg={deg} />
+      </div>
     </div>
   );
 }

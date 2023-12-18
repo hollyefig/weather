@@ -1,11 +1,11 @@
 .output {
-  margin: var(--inputHeight) 0 0 0;
-  padding: 1em 0 0 0;
+  padding: var(--inputHeight) 0 0 0;
   display: grid;
   grid-template-rows: min-content auto;
   grid-template-columns: 100%;
   row-gap: 4vh;
-  height: calc(100vh - var(--inputHeight));
+  min-height: 100vh;
+  height: 100%
 }
 
 .sect1 {
@@ -104,7 +104,7 @@
   --maxWidth: 390px;
 }
 
-.currentTime {
+.currentDate {
   padding: 5px 11px;
   background-color: var(--mediumBlue);
   width: fit-content;

@@ -3,20 +3,31 @@ body {
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url(./IMGs/defaultBG.png);
-  background-repeat: no-repeat;
-  background-size: 100% 100vh;
-  --inputHeight: 14vh;
-  
-}
-
-:root {
+  --inputHeight: 15vh;
   --fontLight: 300;
   --fontReg: 400;
   --fontBold: 600;
   --fontBlack: 800;
-  --inputTownZipBackground: #e5f9fd78;
   --defaultFont: 'Montserrat', sans-serif;
+}
+
+.App {
+  min-height: 100vh;
+  height: auto;
+  background-image: url(./IMGs/defaultBG.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.backdropBlur {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  backdrop-filter: blur(103px);
+}
+
+:root.default {
+  --inputTownZipBackground: #e5f9fd78;
   --inputColor: #2b5351;
   --white: #fff;
   --lightTeal: #8ACDD0;
@@ -28,12 +39,58 @@ body {
   --lightPurple: #4f35fa;
   --purple: #1b00c0;
 }
+:root.sunrise {
+  --inputTownZipBackground: #e5f9fd78;
+  --inputColor: #2b5351;
+  --white: #fff;
+  --lightTeal: #8ACDD0;
+  --mediumTeal: #ffdaff;
+  --lightBlue: #e64da0;
+  --mediumBlue: #444a99;
+  --blue: #125078;
+  --mediumBlueOpacity: #8f5da2a1;
+  --lightPurple: #4f35fa;
+  --purple: #1b00c0;
+}
+:root.sunset {
+  --inputTownZipBackground: #e5f9fd78;
+  --inputColor: #2b5351;
+  --white: #fff;
+  --lightTeal: #f0c9a1;
+  --mediumTeal: #d20707;
+  --lightBlue: #7b1a7a;
+  --mediumBlue: #d85d6d;
+  --blue: #0b2f46;
+  --mediumBlueOpacity: #de7575a1;
+  --lightPurple: #4f35fa;
+  --purple: #1b00c0;
+}
+:root.night {
+  --inputTownZipBackground: #e5f9fd78;
+  --inputColor: #e3f6f5;
+  --white: #fff;
+  --lightTeal: #022224;
+  --mediumTeal: #19a6ce;
+  --lightBlue: #005bee;
+  --mediumBlue: #568ff8;
+  --blue: #010c13;
+  --mediumBlueOpacity: #487896a1;
+  --lightPurple: #4f35fa;
+  --purple: #1b00c0;
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/* .background {
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(150px);
+  position: relative;
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
