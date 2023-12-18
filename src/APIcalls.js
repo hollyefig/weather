@@ -1,9 +1,15 @@
 import axios from "axios";
 
+// default id
+// dd6822690631c05678dc46c5647a00a5
+
+// backup
+// e705fd2733337e25a8b91977646312e1
+
 export const getTown = async (town) => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/geo/1.0/direct?appid=dd6822690631c05678dc46c5647a00a5&q=${town}`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${town}&appid=dd6822690631c05678dc46c5647a00a5`
     );
     return res.data;
   } catch (error) {
@@ -15,7 +21,7 @@ export const getTown = async (town) => {
 export const getZip = async (zip) => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/geo/1.0/zip?appid=dd6822690631c05678dc46c5647a00a5&zip=${zip}`
+      `https://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=dd6822690631c05678dc46c5647a00a5`
     );
     return res.data;
   } catch (error) {
@@ -42,7 +48,7 @@ export const getCountryCode = async (name) => {
     );
     return res.data;
   } catch (error) {
-    console.error("error fetching country name", error);
+    console.error("error fetching country code", error);
     return;
   }
 };
@@ -52,7 +58,7 @@ export const getCountryList = async () => {
     const res = await axios.get("https://restcountries.com/v3.1/all");
     return res.data;
   } catch (error) {
-    console.error("error fetching country name", error);
+    console.error("error fetching country list", error);
     return;
   }
 };
@@ -60,7 +66,7 @@ export const getCountryList = async () => {
 export const getWeather = async (lat, lon) => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/data/3.0/onecall?appid=dd6822690631c05678dc46c5647a00a5&units=imperial&lat=${lat}&lon=${lon}`
+      `https://api.openweathermap.org/data/3.0/onecall?units=imperial&lat=${lat}&lon=${lon}&appid=dd6822690631c05678dc46c5647a00a5`
     );
     return res.data;
   } catch (error) {

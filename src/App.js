@@ -12,7 +12,7 @@ import { Output } from "./components/output/Output";
 import { getCountryCode, getTown, getWeather, getZip } from "./APIcalls";
 
 function App() {
-  const [inputTown, setInputTown] = useState(null);
+  const [inputTown, setInputTown] = useState("Havertown");
   const [inputCountry, setInputCountry] = useState("United States");
   const [selectTown, setSelectedTown] = useState(null);
   const [weather, setWeather] = useState(null);
@@ -164,6 +164,8 @@ function App() {
           townEntered={townEntered}
           setIsUS={setIsUS}
           countryRef={countryRef}
+          deg={deg}
+          setDeg={setDeg}
         />
         <Output selectTown={selectTown} weather={weather} deg={deg} />
       </div>
