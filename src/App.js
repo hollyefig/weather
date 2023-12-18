@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import nightBg from "./IMGs/night.png";
 import sunriseBg from "./IMGs/sunriseBg.png";
@@ -22,6 +22,7 @@ function App() {
   const [themeBg, setThemeBg] = useState(defaultBg);
 
   const doc = document.documentElement;
+  const countryRef = useRef(null);
 
   // & when town is read
   const townEntered = useCallback(async () => {
@@ -162,8 +163,14 @@ function App() {
           setInputCountry={setInputCountry}
           townEntered={townEntered}
           setIsUS={setIsUS}
+          countryRef={countryRef}
         />
-        <Output selectTown={selectTown} weather={weather} deg={deg} />
+        <Output
+          selectTown={selectTown}
+          weather={weather}
+          deg={deg}
+          countryRef={countryRef}
+        />
       </div>
     </div>
   );

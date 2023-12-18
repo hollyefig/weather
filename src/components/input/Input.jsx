@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Countrydropdown } from "./countryDropdown/Countrydropdown";
 import { gsap } from "gsap";
 import "./input.css";
@@ -8,9 +7,9 @@ export const Input = ({
   townEntered,
   setInputCountry,
   setIsUS,
+  countryRef,
 }) => {
   // ~ set Refs
-  const countryRef = useRef(null);
 
   // ! when non US zip is checked
   const checked = (e) => {
@@ -42,11 +41,10 @@ export const Input = ({
       }
     }
   };
-// ! make input text disappear
+  // ! make input text disappear
   const clickInput = (e) => {
-    e.target.value !== '' && (e.target.value = '')
-
-  }
+    e.target.value !== "" && (e.target.value = "");
+  };
 
   return (
     <div className='input'>
