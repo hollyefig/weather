@@ -12,17 +12,31 @@ import { Output } from "./components/output/Output";
 import { getCountryCode, getTown, getWeather, getZip } from "./APIcalls";
 
 function App() {
-  const [inputTown, setInputTown] = useState("Havertown");
+  const [inputTown, setInputTown] = useState(null);
   const [inputCountry, setInputCountry] = useState("United States");
   const [selectTown, setSelectedTown] = useState(null);
   const [weather, setWeather] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
   const [isUS, setIsUS] = useState(true);
   const [deg, setDeg] = useState("˚F");
+  const [tempUnit, setTempUnit] = useState("imperial");
   const [themeBg, setThemeBg] = useState(defaultBg);
+  // for storage
+  const [storageState, setStorageState] = useState([]);
+  const [counter, setCounter] = useState(storageState.length);
 
   const doc = document.documentElement;
   const countryRef = useRef(null);
+
+  // & fetch weather
+  const fetchWeather = useCallback(
+    async (e) => {
+      let unit = tempUnit;
+      let loadWeather = await getWeather(e.lat, e.lon, unit);
+      setWeather(loadWeather);
+    },
+    [tempUnit]
+  );
 
   // & when town is read
   const townEntered = useCallback(async () => {
@@ -90,7 +104,7 @@ function App() {
         }
       }
     }
-  }, [inputTown, countryCode, isUS]);
+  }, [inputTown, countryCode, isUS, fetchWeather]);
 
   // ! get country code
   const countryCodeFunc = useCallback(async () => {
@@ -99,12 +113,6 @@ function App() {
       setCountryCode(loadCode[0].cca2);
     }
   }, [inputCountry]);
-
-  // & fetch weather
-  const fetchWeather = async (e) => {
-    let loadWeather = await getWeather(e.lat, e.lon);
-    setWeather(loadWeather);
-  };
 
   // ! determine time of day for visual UI shifts
   const getDayTime = useCallback(() => {
@@ -135,6 +143,25 @@ function App() {
     }
   }, [weather, doc, setThemeBg]);
 
+  // & add location to favorites
+  const addToFavs = () => {
+    let name = selectTown.name;
+    let forecast = weather;
+    counter !== 0 && setCounter(counter + 1);
+    toLocalStorage(name, forecast, counter);
+  };
+
+  // & to local storage
+  const toLocalStorage = (name, forecast, num) => {
+    const info = {
+      name: name,
+      forecast: forecast,
+    };
+    const stringInfo = JSON.stringify(info);
+    localStorage.setItem(`fav${num}`, stringInfo);
+    setCounter(counter + 1);
+  };
+
   // * USE EFFECT
   useEffect(() => {
     doc.className = "default";
@@ -150,8 +177,24 @@ function App() {
     // ? get day time for UI shift
     weather && getDayTime();
 
+    // ! get localStorage
+    let arr = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      arr.push(JSON.parse(localStorage.getItem(`fav${i}`)));
+    }
+    setCounter(arr.length);
+    setStorageState(arr);
+
     return () => document.removeEventListener("keydown", enterKey);
-  }, [townEntered, countryCodeFunc, getDayTime, weather, doc]);
+  }, [
+    townEntered,
+    countryCodeFunc,
+    getDayTime,
+    weather,
+    doc,
+    setStorageState,
+    counter,
+  ]);
 
   // * RETURN
   return (
@@ -166,8 +209,17 @@ function App() {
           countryRef={countryRef}
           deg={deg}
           setDeg={setDeg}
+          setTempUnit={setTempUnit}
+          tempUnit={tempUnit}
+          storageState={storageState}
+          setStorageState={setStorageState}
         />
-        <Output selectTown={selectTown} weather={weather} deg={deg} />
+        <Output
+          selectTown={selectTown}
+          weather={weather}
+          deg={deg}
+          addToFavs={addToFavs}
+        />
       </div>
     </div>
   );

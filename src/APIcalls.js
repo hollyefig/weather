@@ -4,12 +4,12 @@ import axios from "axios";
 // dd6822690631c05678dc46c5647a00a5
 
 // backup
-// e705fd2733337e25a8b91977646312e1
+// ff399bc2ce25ee4d8dc39eaeedbeff10
 
 export const getTown = async (town) => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${town}&appid=dd6822690631c05678dc46c5647a00a5`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${town}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
     );
     return res.data;
   } catch (error) {
@@ -21,7 +21,7 @@ export const getTown = async (town) => {
 export const getZip = async (zip) => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=dd6822690631c05678dc46c5647a00a5`
+      `https://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
     );
     return res.data;
   } catch (error) {
@@ -63,10 +63,11 @@ export const getCountryList = async () => {
   }
 };
 
-export const getWeather = async (lat, lon) => {
+// units : imperial = F, metric = C
+export const getWeather = async (lat, lon, units) => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/data/3.0/onecall?units=imperial&lat=${lat}&lon=${lon}&appid=dd6822690631c05678dc46c5647a00a5`
+      `https://api.openweathermap.org/data/3.0/onecall?units=${units}&lat=${lat}&lon=${lon}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
     );
     return res.data;
   } catch (error) {

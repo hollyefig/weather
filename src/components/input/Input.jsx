@@ -1,7 +1,8 @@
 import { Countrydropdown } from "./countryDropdown/Countrydropdown";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "./input.css";
+import { Fav } from "./Fav";
 
 export const Input = ({
   setInputTown,
@@ -11,6 +12,10 @@ export const Input = ({
   countryRef,
   deg,
   setDeg,
+  setTempUnit,
+  storageState,
+  setStorageState,
+  getDayTime,
 }) => {
   // ~ set Refs
   const hiddenInputsRef = useRef(null);
@@ -51,13 +56,23 @@ export const Input = ({
     e.target.value !== "" && (e.target.value = "");
   };
 
-  // ! clicked menu dropdown
+  // & clicked menu dropdown
   const burgerClicked = () => {
     let currentHeight = getComputedStyle(hiddenInputsRef.current).height;
-    gsap.to(".hiddenInputs", {
-      height: currentHeight === "0px" ? "auto" : 0,
-      duration: 0.2,
-    });
+    gsap
+      .timeline({ defaults: { duration: 0.3 } })
+      .to(".hiddenInputs", {
+        height: currentHeight === "0px" ? "auto" : 0,
+      })
+      .to(
+        ".input",
+        {
+          backgroundColor:
+            currentHeight === "0px" ? "#0000002e" : "transparent",
+        },
+        "<"
+      )
+      .to(".favsList", { height: currentHeight !== "0px" && "0px" }, "<");
   };
 
   // ! shift temp unit between C and F
@@ -68,27 +83,42 @@ export const Input = ({
         duration: 0.4,
       });
       setDeg("˚C");
+      setTempUnit("imperial");
+
+      townEntered();
     } else {
       gsap.to(".switchCirc", {
         left: "0px",
         duration: 0.4,
       });
       setDeg("˚F");
+      setTempUnit("metric");
+      townEntered();
     }
   };
 
+  // ! favorites dropdown
   const favDropdown = () => {
     const currentHeight = getComputedStyle(favListRef.current).height;
 
     const tl = gsap.timeline({ defaults: { duration: 0.3 } });
     if (currentHeight === "0px") {
-      tl.to("#favArrow", { rotate: 90 }).to(
-        ".favsList",
-        { height: "auto" },
-        "<"
-      );
+      tl.to("#favArrow", { rotate: 90 })
+        .to(".favsList", { height: "auto" }, "<")
+        .to(".input", { backgroundColor: "#000000ab" }, "<");
     } else {
-      tl.to("#favArrow", { rotate: 0 }).to(".favsList", { height: "0px" }, "<");
+      tl.to("#favArrow", { rotate: 0 })
+        .to(".favsList", { height: "0px" }, "<")
+        .to(".input", { backgroundColor: "#0000002e" }, "<");
+    }
+  };
+
+  // ! clear local storage
+  const clearLocalStorage = () => {
+    let result = window.confirm("Clear all favorites?");
+    if (result) {
+      localStorage.clear();
+      setStorageState([]);
     }
   };
 
@@ -106,9 +136,9 @@ export const Input = ({
             </div>
           </div>
           {/* favorites dropdown  */}
-          <div className='favDropdown' onClick={favDropdown}>
+          <div className='favDropdown'>
             {/* button  */}
-            <div className='favButton dropdownTextFormat'>
+            <div className='favButton dropdownTextFormat' onClick={favDropdown}>
               <span className='favArrow'>
                 <svg
                   id='favArrow'
@@ -122,11 +152,22 @@ export const Input = ({
                 </svg>
               </span>
               <span>Favorites</span>
-              <span className='favNum'>0</span>
+              {/* favs length  */}
+              <span className='favNumWrap'>
+                <span className='favNum'>{storageState.length}</span>
+              </span>
             </div>
-            {/* list  */}
+            {/* list of FAVS  */}
             <div className='favsList' ref={favListRef}>
-              list
+              <div>
+                {storageState.map((e, index) => (
+                  <Fav key={index} index={index} data={e} />
+                ))}
+              </div>
+              <div className='favClearAll' onClick={clearLocalStorage}>
+                <span className='material-symbols-outlined'>delete</span>
+                <span>clear all</span>
+              </div>
             </div>
           </div>
         </div>

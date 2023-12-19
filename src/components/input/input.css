@@ -9,8 +9,9 @@
   top: 0;
   z-index: 5;
   --inputMaxWidth: 400px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  --hotPink: rgb(255, 0, 64);
 }
 
 .allInputs {
@@ -101,9 +102,96 @@
   fill: var(--white)
 }
 
+.favNumWrap {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.favNum {
+  --size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hotPink);
+  background-color: var(--white);
+  width: var(--size);
+  aspect-ratio: 1 / 1;
+  border-radius: calc(var(--size) / 2);
+}
+
 .favsList {
   overflow: hidden;
   height: 0
+}
+
+.favsList > div:first-child {
+  padding: 7px 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.favsList > div:first-child > div {
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--white);
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: min-content min-content auto 20px;
+  align-items: center;
+  column-gap: 7px;
+}
+
+.nameFav {
+  font-weight: var(--fontBold);
+  font-size: 14px;
+  padding: 5px 7px;
+  border-radius: 20px;
+}
+
+.timeFav {
+  font-style: italic;
+}
+
+.tempFav > div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-weight: var(--fontBold);
+  font-size: 18px;
+}
+
+.iconFav svg {
+  width:min-content;
+  aspect-ratio: 1 / 1;
+  fill: var(--white);
+  stroke: var(--white);
+}
+
+.iconFav {
+  display: flex;
+  align-items: center;
+}
+
+.favClearAll {
+    color: var(--hotPink);
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: var(--fontBold);
+    margin: 10px 0 0 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.favClearAll .material-symbols-outlined {
+  font-size: 15px;
 }
 
 /* ? INPUT DEFAULT  */
@@ -228,7 +316,7 @@
 
 @media only screen and (max-width: 425px) {
   .inputDefault {
-    grid-template-columns: var(--col1) calc(100% - var(--col1) - var(--col3)) min-content;
+    grid-template-columns: min-content auto min-content;
   }
   .allInputs {
     max-width: none;

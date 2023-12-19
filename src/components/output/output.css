@@ -27,6 +27,46 @@
   align-items: center;
 }
 
+.addToFavsDiv {
+  cursor: pointer;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.addToFavsDiv > span {
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: var(--mediumBlue);
+  font-size: 10px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 3px;
+  transition: background-color .2s ease-out;
+}
+
+.addToFavsDiv > span:hover {
+  background-color: var(--lightBlue);
+}
+
+.addToFavsDiv svg {
+  stroke: var(--white);
+}
+
+.addToFavsDiv > span > span:first-child {
+  width: 15px;
+  aspect-ratio: 1 / 1;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .mainTempWrap {
   display: flex;
   flex-direction: row;
