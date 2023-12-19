@@ -199,31 +199,29 @@ function App() {
   // * RETURN
   return (
     <div className='App' style={{ backgroundImage: `url('${themeBg}')` }}>
-      <div className='backdropBlur'>
-        <Input
-          inputTown={inputTown}
-          setInputTown={setInputTown}
-          inputCountry={inputCountry}
-          setInputCountry={setInputCountry}
-          townEntered={townEntered}
-          setIsUS={setIsUS}
-          countryRef={countryRef}
-          deg={deg}
-          setDeg={setDeg}
-          setTempUnit={setTempUnit}
-          tempUnit={tempUnit}
-          storageState={storageState}
-          setStorageState={setStorageState}
-          setCounter={setCounter}
-          counter={counter}
-        />
-        <Output
-          selectTown={selectTown}
-          weather={weather}
-          deg={deg}
-          addToFavs={addToFavs}
-        />
-      </div>
+      <Input
+        inputTown={inputTown}
+        setInputTown={setInputTown}
+        inputCountry={inputCountry}
+        setInputCountry={setInputCountry}
+        townEntered={townEntered}
+        setIsUS={setIsUS}
+        countryRef={countryRef}
+        deg={deg}
+        setDeg={setDeg}
+        setTempUnit={setTempUnit}
+        tempUnit={tempUnit}
+        storageState={storageState}
+        setStorageState={setStorageState}
+        setCounter={setCounter}
+        counter={counter}
+      />
+      <Output
+        selectTown={selectTown}
+        weather={weather}
+        deg={deg}
+        addToFavs={addToFavs}
+      />
     </div>
   );
 }
