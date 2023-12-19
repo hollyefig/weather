@@ -15,7 +15,7 @@ export const Input = ({
   setTempUnit,
   storageState,
   setStorageState,
-  getDayTime,
+  inputTown,
 }) => {
   // ~ set Refs
   const hiddenInputsRef = useRef(null);
@@ -161,7 +161,14 @@ export const Input = ({
             <div className='favsList' ref={favListRef}>
               <div>
                 {storageState.map((e, index) => (
-                  <Fav key={index} index={index} data={e} />
+                  <Fav
+                    key={index}
+                    index={index}
+                    data={e}
+                    setInputTown={setInputTown}
+                    inputTown={inputTown}
+                    townEntered={townEntered}
+                  />
                 ))}
               </div>
               <div className='favClearAll' onClick={clearLocalStorage}>

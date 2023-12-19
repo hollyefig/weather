@@ -201,6 +201,7 @@ function App() {
     <div className='App' style={{ backgroundImage: `url('${themeBg}')` }}>
       <div className='backdropBlur'>
         <Input
+          inputTown={inputTown}
           setInputTown={setInputTown}
           inputCountry={inputCountry}
           setInputCountry={setInputCountry}

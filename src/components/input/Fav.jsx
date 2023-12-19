@@ -1,7 +1,7 @@
 import React from "react";
 import { Svg } from "../output/SVG/Svg";
 
-export const Fav = ({ data, index }) => {
+export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {
   // ! get local time of area
   const date = new Date();
   const getTime = new Intl.DateTimeFormat("en-GB", {
@@ -9,7 +9,7 @@ export const Fav = ({ data, index }) => {
     hour: "numeric",
     timeZone: data.forecast.timezone,
   }).format(date);
-
+  // ! get color for time of day
   const getColor = () => {
     let current = data.forecast.current.dt;
     let sunrise = data.forecast.current.sunrise;
@@ -34,10 +34,18 @@ export const Fav = ({ data, index }) => {
     }
   };
 
-  getColor();
+  const chooseFav = () => {
+    setInputTown();
+    let newName = data.name;
+    setInputTown(newName);
+    console.log("clicked", inputTown);
+    townEntered();
+  };
+
   //   console.log("fav", data);
+
   return (
-    <div id={`fav${index}`}>
+    <div id={`fav${index}`} onClick={chooseFav}>
       <div className='nameFav' style={{ backgroundColor: getColor() }}>
         {data.name}
       </div>
