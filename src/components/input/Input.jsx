@@ -1,5 +1,5 @@
 import { Countrydropdown } from "./countryDropdown/Countrydropdown";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import "./input.css";
 import { Fav } from "./Fav";
@@ -160,16 +160,17 @@ export const Input = ({
             {/* list of FAVS  */}
             <div className='favsList' ref={favListRef}>
               <div>
-                {storageState.map((e, index) => (
-                  <Fav
-                    key={index}
-                    index={index}
-                    data={e}
-                    setInputTown={setInputTown}
-                    inputTown={inputTown}
-                    townEntered={townEntered}
-                  />
-                ))}
+                {storageState &&
+                  storageState.map((e, index) => (
+                    <Fav
+                      key={index}
+                      index={index}
+                      data={e}
+                      setInputTown={setInputTown}
+                      inputTown={inputTown}
+                      townEntered={townEntered}
+                    />
+                  ))}
               </div>
               <div className='favClearAll' onClick={clearLocalStorage}>
                 <span className='material-symbols-outlined'>delete</span>
