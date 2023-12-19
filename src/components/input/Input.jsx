@@ -133,10 +133,10 @@ export const Input = ({
   };
 
   // ! clear local storage
-  const clearLocalStorage = () => {
+  const clearsessionStorage = () => {
     let result = window.confirm("Clear all favorites?");
     if (result) {
-      localStorage.clear();
+      sessionStorage.clear();
       setStorageState(() => {
         return [];
       });
@@ -195,7 +195,7 @@ export const Input = ({
                     />
                   ))}
               </div>
-              <div className='favClearAll' onClick={clearLocalStorage}>
+              <div className='favClearAll' onClick={clearsessionStorage}>
                 <span className='material-symbols-outlined'>delete</span>
                 <span>clear all</span>
               </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Svg } from "../output/SVG/Svg";
 
 export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {

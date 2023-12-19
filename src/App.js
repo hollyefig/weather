@@ -148,17 +148,17 @@ function App() {
     let name = selectTown.name;
     let weatherStuff = weather;
     counter !== 0 && setCounter(counter + 1);
-    toLocalStorage(name, weatherStuff, counter);
+    toSessionStorage(name, weatherStuff, counter);
   };
 
   // & to local storage
-  const toLocalStorage = (name, weatherStuff, num) => {
+  const toSessionStorage = (name, weatherStuff, num) => {
     const info = {
       name: name,
       weatherStuff: weatherStuff,
     };
     const stringInfo = JSON.stringify(info);
-    localStorage.setItem(`fav${num}`, stringInfo);
+    sessionStorage.setItem(`fav${num}`, stringInfo);
     setCounter(counter + 1);
   };
 
@@ -177,10 +177,10 @@ function App() {
     // ? get day time for UI shift
     weather && getDayTime();
 
-    // ! get localStorage
+    // ! get sessionStorage
     let arr = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      arr.push(JSON.parse(localStorage.getItem(`fav${i}`)));
+    for (let i = 0; i < sessionStorage.length; i++) {
+      arr.push(JSON.parse(sessionStorage.getItem(`fav${i}`)));
     }
     setCounter(arr.length);
     setStorageState(arr);

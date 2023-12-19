@@ -165,7 +165,7 @@
 }
 
 .iconFav svg {
-  width:min-content;
+  width:max-content;
   aspect-ratio: 1 / 1;
   fill: var(--white);
   stroke: var(--white);
