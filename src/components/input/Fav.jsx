@@ -42,7 +42,7 @@ export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {
     townEntered();
   };
 
-  console.log("fav", data.forecast.timezone);
+  //   console.log("fav", data.forecast.timezone);
 
   return (
     <div id={`fav${index}`} onClick={chooseFav}>
