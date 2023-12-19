@@ -145,13 +145,36 @@ function App() {
 
   // & add location to favorites
   const addToFavs = () => {
-    let name = selectTown.name;
-    let weatherStuff = weather;
-    counter !== 0 && setCounter(counter + 1);
-    toSessionStorage(name, weatherStuff, counter);
+    // ? check if item was already added, if not, add item
+    let isMatch;
+    let num;
+    for (let i = 0; i < sessionStorage.length; i++) {
+      // all current names
+      if (
+        JSON.parse(sessionStorage.getItem(`fav${i}`)).name === selectTown.name
+      ) {
+        isMatch = true;
+        num = i;
+      }
+    }
+    if (!isMatch) {
+      let name = selectTown.name;
+      let weatherStuff = weather;
+      counter !== 0 && setCounter(counter + 1);
+      toSessionStorage(name, weatherStuff, counter);
+    } else {
+      sessionStorage.removeItem(`fav${num}`);
+      let arr = [];
+      for (let i = 0; i < sessionStorage.length; i++) {
+        arr.push(JSON.parse(sessionStorage.getItem(`fav${i}`)));
+      }
+      setCounter(arr.length);
+      setStorageState(arr);
+      console.log("this item was already added", sessionStorage, storageState);
+    }
   };
 
-  // & to local storage
+  // & to sesh storage
   const toSessionStorage = (name, weatherStuff, num) => {
     const info = {
       name: name,
@@ -221,6 +244,7 @@ function App() {
         weather={weather}
         deg={deg}
         addToFavs={addToFavs}
+        storageState={storageState}
       />
     </div>
   );

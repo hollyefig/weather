@@ -9,8 +9,8 @@
   top: 0;
   z-index: 5;
   --inputMaxWidth: 400px;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(11px);
+  -webkit-backdrop-filter: blur(11px);
   --hotPink: rgb(255, 0, 64);
 }
 
@@ -90,6 +90,7 @@
   align-items: center;
   column-gap: 5px;
   cursor: pointer;
+  padding: 5px 0;
 }
 
 .favArrow {

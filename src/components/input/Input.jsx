@@ -1,5 +1,5 @@
 import { Countrydropdown } from "./countryDropdown/Countrydropdown";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import "./input.css";
 import { Fav } from "./Fav";
@@ -184,16 +184,20 @@ export const Input = ({
             <div className='favsList' ref={favListRef}>
               <div>
                 {storageState &&
-                  storageState.map((e, index) => (
-                    <Fav
-                      key={index}
-                      index={index}
-                      data={e}
-                      setInputTown={setInputTown}
-                      inputTown={inputTown}
-                      townEntered={townEntered}
-                    />
-                  ))}
+                  storageState.map((e, index) => {
+                    return (
+                      storageState[index] && (
+                        <Fav
+                          key={index}
+                          index={index}
+                          data={e}
+                          setInputTown={setInputTown}
+                          inputTown={inputTown}
+                          townEntered={townEntered}
+                        />
+                      )
+                    );
+                  })}
               </div>
               <div className='favClearAll' onClick={clearsessionStorage}>
                 <span className='material-symbols-outlined'>delete</span>

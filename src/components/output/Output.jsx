@@ -6,7 +6,13 @@ import { Svg } from "./SVG/Svg";
 import { Hourly } from "./children/Hourly";
 import { Sect2 } from "./children/Sect2";
 
-export const Output = ({ selectTown, weather, deg, addToFavs }) => {
+export const Output = ({
+  selectTown,
+  weather,
+  deg,
+  addToFavs,
+  storageState,
+}) => {
   // & States
   const [countryName, setCountryName] = useState(null);
   const [countryFlag, setCountryFlag] = useState("");
@@ -14,6 +20,7 @@ export const Output = ({ selectTown, weather, deg, addToFavs }) => {
   const [riseSet, setRiseSet] = useState(null);
   const [hourlyArr, setHourlyArr] = useState(null);
   const [currentDate, setCurrentDate] = useState(null);
+  const [isFav, setIsFav] = useState(false);
   // & Refs
   const tempDivWidth = useRef(null);
   const locDatWrap = useRef(null);
@@ -129,6 +136,23 @@ export const Output = ({ selectTown, weather, deg, addToFavs }) => {
         timeZone: weather.timezone,
       }).format(date);
       setCurrentDate(time);
+
+      // ? determine if fav'd
+      isFav && setIsFav(false);
+      selectTown &&
+        storageState.forEach((e) => {
+          if (e.name) {
+            if (e.name === selectTown.name) {
+              setIsFav(() => {
+                return true;
+              });
+            } else {
+              setIsFav(() => {
+                return false;
+              });
+            }
+          }
+        });
     }
   }, [
     daylightHours,
@@ -138,6 +162,9 @@ export const Output = ({ selectTown, weather, deg, addToFavs }) => {
     setRiseSet,
     setHourlyArr,
     setCurrentDate,
+    storageState,
+    isFav,
+    setIsFav,
   ]);
 
   return (
@@ -149,21 +176,44 @@ export const Output = ({ selectTown, weather, deg, addToFavs }) => {
               {/* add to favs  */}
               <div className='addToFavsDiv' ref={favWrap}>
                 <span onClick={addToFavs}>
-                  <span>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      // width='36'
-                      // height='34'
-                      viewBox='0 0 36 34'
-                      fill='none'
-                    >
-                      <path
-                        d='M23.7419 10.0969L20.2344 3.10801C19.3119 1.26985 16.6881 1.26986 15.7656 3.10801L12.2581 10.0969L4.52734 11.2731C2.49406 11.5824 1.6833 14.0778 3.14641 15.5232L8.70935 21.0187L7.43905 28.7345C7.10494 30.7639 9.2276 32.3061 11.0544 31.3612L18 27.7688L24.9456 31.3612C26.7724 32.3061 28.8951 30.7639 28.561 28.7345L27.2906 21.0187L32.8536 15.5232C34.3167 14.0778 33.5059 11.5824 31.4727 11.2731L23.7419 10.0969Z'
-                        strokeWidth='3'
-                      />
-                    </svg>
-                  </span>
-                  <span>add to favorites</span>
+                  {isFav ? (
+                    <>
+                      <span>
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          // width='36'
+                          // height='34'
+                          viewBox='0 0 36 34'
+                          fill='none'
+                        >
+                          <path
+                            d='M23.7419 10.0969L20.2344 3.10801C19.3119 1.26985 16.6881 1.26986 15.7656 3.10801L12.2581 10.0969L4.52734 11.2731C2.49406 11.5824 1.6833 14.0778 3.14641 15.5232L8.70935 21.0187L7.43905 28.7345C7.10494 30.7639 9.2276 32.3061 11.0544 31.3612L18 27.7688L24.9456 31.3612C26.7724 32.3061 28.8951 30.7639 28.561 28.7345L27.2906 21.0187L32.8536 15.5232C34.3167 14.0778 33.5059 11.5824 31.4727 11.2731L23.7419 10.0969Z'
+                            strokeWidth='3'
+                            fill='white'
+                          />
+                        </svg>
+                      </span>
+                      <span>in favorites</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          // width='36'
+                          // height='34'
+                          viewBox='0 0 36 34'
+                          fill='none'
+                        >
+                          <path
+                            d='M23.7419 10.0969L20.2344 3.10801C19.3119 1.26985 16.6881 1.26986 15.7656 3.10801L12.2581 10.0969L4.52734 11.2731C2.49406 11.5824 1.6833 14.0778 3.14641 15.5232L8.70935 21.0187L7.43905 28.7345C7.10494 30.7639 9.2276 32.3061 11.0544 31.3612L18 27.7688L24.9456 31.3612C26.7724 32.3061 28.8951 30.7639 28.561 28.7345L27.2906 21.0187L32.8536 15.5232C34.3167 14.0778 33.5059 11.5824 31.4727 11.2731L23.7419 10.0969Z'
+                            strokeWidth='3'
+                          />
+                        </svg>
+                      </span>
+                      <span>add to favorites</span>
+                    </>
+                  )}
                 </span>
               </div>
               {/* main temp  */}
