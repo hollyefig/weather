@@ -56,12 +56,13 @@
 
 .addToFavsDiv svg {
   stroke: var(--white);
+  width: 100%;
 }
 
 .addToFavsDiv > span > span:first-child {
-  width: 15px;
+  width: 13px;
   aspect-ratio: 1 / 1;
-  display: block;
+
   display: flex;
   align-items: center;
   justify-content: center;
