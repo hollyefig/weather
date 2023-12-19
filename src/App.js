@@ -146,16 +146,16 @@ function App() {
   // & add location to favorites
   const addToFavs = () => {
     let name = selectTown.name;
-    let forecast = weather;
+    let weatherStuff = weather;
     counter !== 0 && setCounter(counter + 1);
-    toLocalStorage(name, forecast, counter);
+    toLocalStorage(name, weatherStuff, counter);
   };
 
   // & to local storage
-  const toLocalStorage = (name, forecast, num) => {
+  const toLocalStorage = (name, weatherStuff, num) => {
     const info = {
       name: name,
-      forecast: forecast,
+      weatherStuff: weatherStuff,
     };
     const stringInfo = JSON.stringify(info);
     localStorage.setItem(`fav${num}`, stringInfo);
