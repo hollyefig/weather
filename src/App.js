@@ -214,6 +214,8 @@ function App() {
           tempUnit={tempUnit}
           storageState={storageState}
           setStorageState={setStorageState}
+          setCounter={setCounter}
+          counter={counter}
         />
         <Output
           selectTown={selectTown}

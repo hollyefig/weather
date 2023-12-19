@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Svg } from "../output/SVG/Svg";
 
 export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {
-  console.log("fav", data);
   // ! get local time of area
   const date = new Date();
   const getTime = new Intl.DateTimeFormat("en-GB", {
@@ -36,12 +35,15 @@ export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {
   };
 
   const chooseFav = () => {
-    setInputTown();
-    let newName = data.name;
-    setInputTown(newName);
-    console.log("clicked", inputTown);
-    townEntered();
+    setInputTown(() => {
+      let newName = data.name;
+      console.log("clicked", newName);
+      townEntered();
+      return newName;
+    });
   };
+
+  //   console.log("fav", data);
 
   return (
     <div id={`fav${index}`} onClick={chooseFav}>

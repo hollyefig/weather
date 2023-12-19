@@ -16,10 +16,12 @@ export const Input = ({
   storageState,
   setStorageState,
   inputTown,
+  setCounter,
 }) => {
   // ~ set Refs
   const hiddenInputsRef = useRef(null);
   const favListRef = useRef(null);
+  const favArrow = useRef(null);
 
   // ! when non US zip is checked
   const checked = (e) => {
@@ -58,7 +60,11 @@ export const Input = ({
 
   // & clicked menu dropdown
   const burgerClicked = () => {
+    let favArrowDown =
+      getComputedStyle(favArrow.current).transform ===
+      "matrix(0, 1, -1, 0, 0, 0)";
     let currentHeight = getComputedStyle(hiddenInputsRef.current).height;
+
     gsap
       .timeline({ defaults: { duration: 0.3 } })
       .to(".hiddenInputs", {
@@ -72,7 +78,15 @@ export const Input = ({
         },
         "<"
       )
-      .to(".favsList", { height: currentHeight !== "0px" && "0px" }, "<");
+      .to(".favsList", { height: currentHeight !== "0px" && "0px" }, "<")
+      .add(
+        // if logic passes, fav arrow must rotate up
+        () =>
+          currentHeight !== "0px" &&
+          favArrowDown &&
+          gsap.to("#favArrow", { rotate: 0 }),
+        "<"
+      );
   };
 
   // ! shift temp unit between C and F
@@ -82,8 +96,11 @@ export const Input = ({
         left: "18px",
         duration: 0.4,
       });
-      setDeg("˚C");
-      setTempUnit("imperial");
+      setDeg(() => {
+        setTempUnit("imperial");
+        townEntered();
+        return "˚C";
+      });
 
       townEntered();
     } else {
@@ -91,9 +108,11 @@ export const Input = ({
         left: "0px",
         duration: 0.4,
       });
-      setDeg("˚F");
-      setTempUnit("metric");
-      townEntered();
+      setDeg(() => {
+        setTempUnit("metric");
+        townEntered();
+        return "˚F";
+      });
     }
   };
 
@@ -118,7 +137,10 @@ export const Input = ({
     let result = window.confirm("Clear all favorites?");
     if (result) {
       localStorage.clear();
-      setStorageState([]);
+      setStorageState(() => {
+        return [];
+      });
+      setCounter(0);
     }
   };
 
@@ -142,6 +164,7 @@ export const Input = ({
               <span className='favArrow'>
                 <svg
                   id='favArrow'
+                  ref={favArrow}
                   xmlns='http://www.w3.org/2000/svg'
                   width='15'
                   height='16'
