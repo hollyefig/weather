@@ -36,7 +36,7 @@ export const Input = ({
           "style",
           "background-color: #1b93ff ; border-color: #1b93ff;"
         );
-        tl.to(countryRef.current, { height: "40px" }).to(countryRef.current, {
+        tl.to(countryRef.current, { height: "auto" }).to(countryRef.current, {
           overflow: "visible",
         });
       } else {
@@ -262,11 +262,9 @@ export const Input = ({
             </span>
           </button>
         </div>
-
-        <Countrydropdown
-          setInputCountry={setInputCountry}
-          countryRef={countryRef}
-        />
+        <div className='countryDropdownOuter' ref={countryRef}>
+          <Countrydropdown setInputCountry={setInputCountry} />
+        </div>
       </div>
     </div>
   );

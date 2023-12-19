@@ -272,14 +272,19 @@
 .checkZip {
   cursor: pointer;
   font-size: 12px;
-  color: var(--mediumBlue);
+  color: var(--white);
+  text-shadow: 0 0 18px var(--mediumBlue);
 }
 
-.countryDropdown {
+.countryDropdownOuter {
   height: 0;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.countryDropdown {
+  padding: 5px;
 }
 
 .btnEnter {
