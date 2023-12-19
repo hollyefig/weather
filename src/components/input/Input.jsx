@@ -160,7 +160,7 @@ export const Input = ({
             {/* list of FAVS  */}
             <div className='favsList' ref={favListRef}>
               <div>
-                {storageState &&
+                {/* {storageState &&
                   storageState.map((e, index) => (
                     <Fav
                       key={index}
@@ -170,7 +170,7 @@ export const Input = ({
                       inputTown={inputTown}
                       townEntered={townEntered}
                     />
-                  ))}
+                  ))} */}
               </div>
               <div className='favClearAll' onClick={clearLocalStorage}>
                 <span className='material-symbols-outlined'>delete</span>

@@ -3,12 +3,12 @@ import { Svg } from "../output/SVG/Svg";
 
 export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {
   // ! get local time of area
-  //   const date = new Date();
-  //   const getTime = new Intl.DateTimeFormat("en-GB", {
-  //     minute: "numeric",
-  //     hour: "numeric",
-  //     timeZone: data.forecast.timezone,
-  //   }).format(date);
+  const date = new Date();
+  const getTime = new Intl.DateTimeFormat("en-GB", {
+    minute: "numeric",
+    hour: "numeric",
+    timeZone: data.forecast.timezone,
+  }).format(date);
   // ! get color for time of day
   const getColor = () => {
     let current = data.forecast.current.dt;
@@ -49,7 +49,7 @@ export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {
       <div className='nameFav' style={{ backgroundColor: getColor() }}>
         {data.name}
       </div>
-      {/* <div className='timeFav'>{getTime}</div> */}
+      <div className='timeFav'>{getTime}</div>
       <div className='tempFav'>
         <div>{Math.floor(data.forecast.current.temp)}˚</div>
       </div>
