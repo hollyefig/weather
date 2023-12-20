@@ -68,8 +68,10 @@ export const Input = ({
         duration: 0.4,
       });
       setDeg(() => {
-        setTempUnit("imperial");
-        townEntered();
+        setTempUnit(() => {
+          townEntered();
+          return "metric";
+        });
         return "˚C";
       });
 
@@ -80,8 +82,10 @@ export const Input = ({
         duration: 0.4,
       });
       setDeg(() => {
-        setTempUnit("metric");
-        townEntered();
+        setTempUnit(() => {
+          townEntered();
+          return "imperial";
+        });
         return "˚F";
       });
     }

@@ -96,8 +96,8 @@ export const Output = ({
     toCountryName();
   }
 
+  // ? close burger when clicking output body
   const outputClicked = () => {
-    console.log("click");
     getComputedStyle(hiddenInputsRef.current).height !== "0px" &&
       burgerClicked();
   };
@@ -179,158 +179,154 @@ export const Output = ({
 
   return (
     <div className='output' ref={outputRef} onClick={outputClicked}>
-      {selectTown && weather && (
-        <>
-          <div className='sect1'>
-            <div className='sect1Left'>
-              {/* add to favs  */}
-              <div className='addToFavsDiv' ref={favWrap}>
-                <span onClick={addToFavs}>
-                  {isFav ? (
-                    <>
-                      <span>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          // width='36'
-                          // height='34'
-                          viewBox='0 0 36 34'
-                          fill='none'
-                        >
-                          <path
-                            d='M23.7419 10.0969L20.2344 3.10801C19.3119 1.26985 16.6881 1.26986 15.7656 3.10801L12.2581 10.0969L4.52734 11.2731C2.49406 11.5824 1.6833 14.0778 3.14641 15.5232L8.70935 21.0187L7.43905 28.7345C7.10494 30.7639 9.2276 32.3061 11.0544 31.3612L18 27.7688L24.9456 31.3612C26.7724 32.3061 28.8951 30.7639 28.561 28.7345L27.2906 21.0187L32.8536 15.5232C34.3167 14.0778 33.5059 11.5824 31.4727 11.2731L23.7419 10.0969Z'
-                            strokeWidth='3'
-                            fill='white'
-                          />
-                        </svg>
-                      </span>
-                      <span>in favorites</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          // width='36'
-                          // height='34'
-                          viewBox='0 0 36 34'
-                          fill='none'
-                        >
-                          <path
-                            d='M23.7419 10.0969L20.2344 3.10801C19.3119 1.26985 16.6881 1.26986 15.7656 3.10801L12.2581 10.0969L4.52734 11.2731C2.49406 11.5824 1.6833 14.0778 3.14641 15.5232L8.70935 21.0187L7.43905 28.7345C7.10494 30.7639 9.2276 32.3061 11.0544 31.3612L18 27.7688L24.9456 31.3612C26.7724 32.3061 28.8951 30.7639 28.561 28.7345L27.2906 21.0187L32.8536 15.5232C34.3167 14.0778 33.5059 11.5824 31.4727 11.2731L23.7419 10.0969Z'
-                            strokeWidth='3'
-                          />
-                        </svg>
-                      </span>
-                      <span>add to favorites</span>
-                    </>
-                  )}
-                </span>
-              </div>
-              {/* main temp  */}
-              <div className='mainTempWrap' ref={tempDivWidth}>
-                <span className='temp'>{Math.floor(weather.current.temp)}</span>
-                <span className='deg'>{deg}</span>
-              </div>
-              {/* location data  */}
-              <div className='locationDataWrap' ref={locDatWrap}>
-                <div className='loc1'>{selectTown.name}</div>
-                <div className='loc2'>{selectTown.state}</div>
-                <div className='countrySect'>
-                  <div className='flag'>
-                    <img alt={countryName} src={countryFlag} />
-                  </div>
-                  <div className='loc3'>{countryName}</div>
-                </div>
-              </div>
-            </div>
-            <div className='sect1Right'>
-              {/* CURRENT CONDITIONS, TEMP */}
-              {currentDate && (
-                <div className='currentDate'>
-                  as of
-                  <span>{currentDate},</span>
-                  <span>|</span>
-                  <span>{selectTown.name} local time</span>
-                </div>
-              )}
-
-              <div className='currentSect1'>
-                <div className='currentIcon'>
-                  <Svg weather={weather.current.weather[0].main} />
-                </div>
-                <div className='currentDesc'>
+      <div className='sect1'>
+        <div className='sect1Left'>
+          {/* add to favs  */}
+          <div className='addToFavsDiv' ref={favWrap}>
+            <span onClick={addToFavs}>
+              {isFav ? (
+                <>
                   <span>
-                    {/*  display all conditions */}
-                    {weather.current.weather.map((e, index) => {
-                      if (weather.current.weather.length - 1 === index) {
-                        return e.description;
-                      } else {
-                        return `${e.description}, `;
-                      }
-                    })}
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      // width='36'
+                      // height='34'
+                      viewBox='0 0 36 34'
+                      fill='none'
+                    >
+                      <path
+                        d='M23.7419 10.0969L20.2344 3.10801C19.3119 1.26985 16.6881 1.26986 15.7656 3.10801L12.2581 10.0969L4.52734 11.2731C2.49406 11.5824 1.6833 14.0778 3.14641 15.5232L8.70935 21.0187L7.43905 28.7345C7.10494 30.7639 9.2276 32.3061 11.0544 31.3612L18 27.7688L24.9456 31.3612C26.7724 32.3061 28.8951 30.7639 28.561 28.7345L27.2906 21.0187L32.8536 15.5232C34.3167 14.0778 33.5059 11.5824 31.4727 11.2731L23.7419 10.0969Z'
+                        strokeWidth='3'
+                        fill='white'
+                      />
+                    </svg>
                   </span>
-                  <div className='currentDesc2'>
-                    <div className='feelsLike'>
-                      {Math.floor(weather.current.feels_like)}˚
-                    </div>
-                    <div className='currentHumidity'>
-                      <span>
-                        {weather.current.humidity}
-                        <sup>%</sup>
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                  <span>in favorites</span>
+                </>
+              ) : (
+                <>
+                  <span>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      // width='36'
+                      // height='34'
+                      viewBox='0 0 36 34'
+                      fill='none'
+                    >
+                      <path
+                        d='M23.7419 10.0969L20.2344 3.10801C19.3119 1.26985 16.6881 1.26986 15.7656 3.10801L12.2581 10.0969L4.52734 11.2731C2.49406 11.5824 1.6833 14.0778 3.14641 15.5232L8.70935 21.0187L7.43905 28.7345C7.10494 30.7639 9.2276 32.3061 11.0544 31.3612L18 27.7688L24.9456 31.3612C26.7724 32.3061 28.8951 30.7639 28.561 28.7345L27.2906 21.0187L32.8536 15.5232C34.3167 14.0778 33.5059 11.5824 31.4727 11.2731L23.7419 10.0969Z'
+                        strokeWidth='3'
+                      />
+                    </svg>
+                  </span>
+                  <span>add to favorites</span>
+                </>
+              )}
+            </span>
+          </div>
+          {/* main temp  */}
+          <div className='mainTempWrap' ref={tempDivWidth}>
+            <span className='temp'>{Math.floor(weather.current.temp)}</span>
+            <span className='deg'>{deg}</span>
+          </div>
+          {/* location data  */}
+          <div className='locationDataWrap' ref={locDatWrap}>
+            <div className='loc1'>{selectTown.name}</div>
+            <div className='loc2'>{selectTown.state}</div>
+            <div className='countrySect'>
+              <div className='flag'>
+                <img alt={countryName} src={countryFlag} />
               </div>
-              {/* SUNRISE & SUNSET */}
-              <div className='currentSect2'>
-                <div className='lightBar'>
-                  <div className='dayHoursDesc'>
-                    <span>{lightHours}&nbsp;</span>
-                    <span>hours of daylight</span>
-                  </div>
-                  <div className='lightBarWrap'>
-                    <div className='bar' ref={lightBar}>
-                      <div className='rise'></div>
-                      <div className='set'></div>
-                    </div>
-                  </div>
-                  <div className='timeSectRiseSet'>
-                    <div className='riseSect'>
-                      <div className='rise'></div>
-                      <div className='riseTime'>{riseSet && riseSet[0]}</div>
-                    </div>
-                    <div className='setSect'>
-                      <div className='set'></div>
-                      <div className='setTime'>{riseSet && riseSet[1]}</div>
-                    </div>
-                  </div>
+              <div className='loc3'>{countryName}</div>
+            </div>
+          </div>
+        </div>
+        <div className='sect1Right'>
+          {/* CURRENT CONDITIONS, TEMP */}
+          {currentDate && (
+            <div className='currentDate'>
+              as of
+              <span>{currentDate},</span>
+              <span>|</span>
+              <span>{selectTown.name} local time</span>
+            </div>
+          )}
+
+          <div className='currentSect1'>
+            <div className='currentIcon'>
+              <Svg weather={weather.current.weather[0].main} />
+            </div>
+            <div className='currentDesc'>
+              <span>
+                {/*  display all conditions */}
+                {weather.current.weather.map((e, index) => {
+                  if (weather.current.weather.length - 1 === index) {
+                    return e.description;
+                  } else {
+                    return `${e.description}, `;
+                  }
+                })}
+              </span>
+              <div className='currentDesc2'>
+                <div className='feelsLike'>
+                  {Math.floor(weather.current.feels_like)}˚
                 </div>
-              </div>
-              {/* HOURLY SECT  */}
-              <div className='currentSect3'>
-                <div className='hourlySect'>
-                  {hourlyArr &&
-                    hourlyArr.map((e, index) => {
-                      return (
-                        <Hourly
-                          key={index}
-                          num={index}
-                          data={e}
-                          calculateLocalTime={calculateLocalTime}
-                          formatTimeInTimeZone={formatTimeInTimeZone}
-                          weather={weather}
-                        />
-                      );
-                    })}
+                <div className='currentHumidity'>
+                  <span>
+                    {weather.current.humidity}
+                    <sup>%</sup>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
-          {/* SECT 2 */}
-          <Sect2 weather={weather} />
-        </>
-      )}
+          {/* SUNRISE & SUNSET */}
+          <div className='currentSect2'>
+            <div className='lightBar'>
+              <div className='dayHoursDesc'>
+                <span>{lightHours}&nbsp;</span>
+                <span>hours of daylight</span>
+              </div>
+              <div className='lightBarWrap'>
+                <div className='bar' ref={lightBar}>
+                  <div className='rise'></div>
+                  <div className='set'></div>
+                </div>
+              </div>
+              <div className='timeSectRiseSet'>
+                <div className='riseSect'>
+                  <div className='rise'></div>
+                  <div className='riseTime'>{riseSet && riseSet[0]}</div>
+                </div>
+                <div className='setSect'>
+                  <div className='set'></div>
+                  <div className='setTime'>{riseSet && riseSet[1]}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* HOURLY SECT  */}
+          <div className='currentSect3'>
+            <div className='hourlySect'>
+              {hourlyArr &&
+                hourlyArr.map((e, index) => {
+                  return (
+                    <Hourly
+                      key={index}
+                      num={index}
+                      data={e}
+                      calculateLocalTime={calculateLocalTime}
+                      formatTimeInTimeZone={formatTimeInTimeZone}
+                      weather={weather}
+                    />
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* SECT 2 */}
+      <Sect2 weather={weather} />
     </div>
   );
 };

@@ -146,7 +146,7 @@ function App() {
   }, [weather, doc, setThemeBg]);
 
   // & add location to favorites
-  const addToFavs = useCallback(() => {
+  const addToFavs = () => {
     // ? check if item was already added
     let isMatch;
     let num;
@@ -182,14 +182,12 @@ function App() {
     else {
       removeFav(`fav${num}`);
     }
-  }, [setFavorites, selectTown, weather]);
+  };
 
   // & remove favorite
   const removeFav = (key) => {
-    // gsap
-    //   .timeline({ defaults: { duration: 0.4, delay: 0 } })
-    //   .to(`#fav${num}`, { opacity: 0 })
-    //   .add(() => {
+    let removeNum = parseInt(key.slice(3));
+
     sessionStorage.removeItem(key);
 
     const storageKeys = Object.keys(sessionStorage);
@@ -205,11 +203,11 @@ function App() {
 
     // Update state to trigger re-render
     setFavorites((prevFavorites) => {
-      const updatedFavorites = prevFavorites.filter((_, i) => i !== key);
+      const updatedFavorites = prevFavorites.filter((e, i) => {
+        return i !== removeNum;
+      });
       return updatedFavorites;
     });
-
-    // });
   };
 
   // & clicked menu dropdown
@@ -269,6 +267,8 @@ function App() {
     return () => document.removeEventListener("keydown", enterKey);
   }, [townEntered, countryCodeFunc, getDayTime, weather, doc, setFavorites]);
 
+  console.log("tempUnit", tempUnit);
+
   // * RETURN
   return (
     <div className='App' style={{ backgroundImage: `url('${themeBg}')` }}>
@@ -283,7 +283,6 @@ function App() {
         deg={deg}
         setDeg={setDeg}
         setTempUnit={setTempUnit}
-        tempUnit={tempUnit}
         favorites={favorites}
         setFavorites={setFavorites}
         removeFav={removeFav}
@@ -291,15 +290,17 @@ function App() {
         burgerClicked={burgerClicked}
         favArrow={favArrow}
       />
-      <Output
-        selectTown={selectTown}
-        weather={weather}
-        deg={deg}
-        addToFavs={addToFavs}
-        favorites={favorites}
-        hiddenInputsRef={hiddenInputsRef}
-        burgerClicked={burgerClicked}
-      />
+      {selectTown && weather && (
+        <Output
+          selectTown={selectTown}
+          weather={weather}
+          deg={deg}
+          addToFavs={addToFavs}
+          favorites={favorites}
+          hiddenInputsRef={hiddenInputsRef}
+          burgerClicked={burgerClicked}
+        />
+      )}
     </div>
   );
 }
