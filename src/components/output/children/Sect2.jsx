@@ -2,7 +2,7 @@ import React from "react";
 import "./sect2.css";
 import { Svg } from "../SVG/Svg";
 
-export const Sect2 = ({ weather }) => {
+export const Sect2 = ({ weather, deg }) => {
   // ! get local day
   const getLocal = (timeStamp, timezoneOffset) => {
     // Convert UTC timestamp to milliseconds
@@ -19,8 +19,8 @@ export const Sect2 = ({ weather }) => {
   };
 
   let weekArr = [];
-  for (let i = 0; i < weather.daily.length; i++) {
-    weekArr.push(weather.daily[i]);
+  for (let i = 0; i < weather[deg].daily.length; i++) {
+    weekArr.push(weather[deg].daily[i]);
   }
 
   let months = [
@@ -54,10 +54,10 @@ export const Sect2 = ({ weather }) => {
         {weekArr &&
           weekArr.map((e, index) => {
             let day =
-              daysOfWeek[getLocal(e.dt, weather.timezone_offset).getDay()];
+              daysOfWeek[getLocal(e.dt, weather[deg].timezone_offset).getDay()];
             let month =
-              months[getLocal(e.dt, weather.timezone_offset).getMonth()];
-            let dayNum = getLocal(e.dt, weather.timezone_offset).getDate();
+              months[getLocal(e.dt, weather[deg].timezone_offset).getMonth()];
+            let dayNum = getLocal(e.dt, weather[deg].timezone_offset).getDate();
 
             return (
               index !== 0 && (

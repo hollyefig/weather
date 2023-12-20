@@ -18,8 +18,9 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [countryCode, setCountryCode] = useState(null);
   const [isUS, setIsUS] = useState(true);
-  const [deg, setDeg] = useState("˚F");
-  const [tempUnit, setTempUnit] = useState("imperial");
+  const [deg, setDeg] = useState("far");
+  const [tempUnit, setTempUnit] = useState(true); //true = imperial, false = metric
+
   const [themeBg, setThemeBg] = useState(defaultBg);
   // for storage
   const [favorites, setFavorites] = useState([]);
@@ -30,34 +31,69 @@ function App() {
   const hiddenInputsRef = useRef(null);
   const favArrow = useRef(null);
 
+  // create 2 API calls dpeneding on C or F
   // & fetch weather
-  const fetchWeather = useCallback(
-    async (e) => {
-      let unit = tempUnit;
-      let loadWeather = await getWeather(e.lat, e.lon, unit);
-      setWeather(loadWeather);
-    },
-    [tempUnit]
-  );
+  const fetchWeather = useCallback(async (e) => {
+    let loadWeather = await getWeather(e.lat, e.lon);
+    setWeather(loadWeather);
+  }, []);
 
   // & when town is read
-  const townEntered = useCallback(async () => {
-    let loadTown;
-    // ! for string / letters input
-    if (isNaN(parseInt(inputTown))) {
-      if (inputTown !== null && inputTown !== "") {
-        if (isUS) {
-          loadTown = await getTown(inputTown);
-          setSelectedTown(...loadTown);
-          // ensure data is found before sending off
-          if (loadTown.length !== 0) {
-            fetchWeather(...loadTown);
+  const townEntered = useCallback(
+    async (name) => {
+      let loadTown;
+      // ! for string / letters input
+      if (isNaN(parseInt(name))) {
+        if (name !== null && name !== "") {
+          if (isUS) {
+            loadTown = await getTown(name);
+            // console.log(...loadTown, loadTown);
+            setSelectedTown(...loadTown);
+            // ensure data is found before sending off
+            if (loadTown.length !== 0) {
+              fetchWeather(...loadTown);
+            }
+          }
+          // ! Non US zip with letters
+          else {
+            let zip = name.replace(" ", "+");
+            let loadZip = await getZip(`${zip},${countryCode}`);
+            if (loadZip) {
+              loadTown = await getTown(loadZip.name);
+              setSelectedTown(...loadTown);
+
+              // ensure there is data
+              if (loadTown !== undefined) {
+                // fetch weather
+                fetchWeather(...loadTown);
+              }
+            }
           }
         }
-        // ! Non US zip with letters
-        else {
-          let zip = inputTown.replace(" ", "+");
-          let loadZip = await getZip(`${zip},${countryCode}`);
+      }
+      // ! for zip input
+      else {
+        let parseZip = parseInt(name);
+        // ? ensure it's a 5-digit zip (US only)
+        if (isUS) {
+          if (name.length === 5) {
+            let loadZip = await getZip(parseZip);
+            loadTown = await getTown(loadZip.name);
+            setSelectedTown(...loadTown);
+            // ensure there is data
+            if (loadTown !== undefined) {
+              fetchWeather(...loadTown);
+            }
+          }
+        }
+        // ? if non US zip code
+        else if (!isUS) {
+          let loadZip;
+          // adjust if there's a "-" (ex: japan)
+          name.includes("-")
+            ? (loadZip = await getZip(`${name},${countryCode}`))
+            : (loadZip = await getZip(`${parseZip},${countryCode}`));
+
           if (loadZip) {
             loadTown = await getTown(loadZip.name);
             setSelectedTown(...loadTown);
@@ -70,43 +106,9 @@ function App() {
           }
         }
       }
-    }
-    // ! for zip input
-    else {
-      let parseZip = parseInt(inputTown);
-      // ? ensure it's a 5-digit zip (US only)
-      if (isUS) {
-        if (inputTown.length === 5) {
-          let loadZip = await getZip(parseZip);
-          loadTown = await getTown(loadZip.name);
-          setSelectedTown(...loadTown);
-          // ensure there is data
-          if (loadTown !== undefined) {
-            fetchWeather(...loadTown);
-          }
-        }
-      }
-      // ? if non US zip code
-      else if (!isUS) {
-        let loadZip;
-        // adjust if there's a "-" (ex: japan)
-        inputTown.includes("-")
-          ? (loadZip = await getZip(`${inputTown},${countryCode}`))
-          : (loadZip = await getZip(`${parseZip},${countryCode}`));
-
-        if (loadZip) {
-          loadTown = await getTown(loadZip.name);
-          setSelectedTown(...loadTown);
-
-          // ensure there is data
-          if (loadTown !== undefined) {
-            // fetch weather
-            fetchWeather(...loadTown);
-          }
-        }
-      }
-    }
-  }, [inputTown, countryCode, isUS, fetchWeather]);
+    },
+    [inputTown, countryCode, isUS, fetchWeather]
+  );
 
   // ! get country code
   const countryCodeFunc = useCallback(async () => {
@@ -118,9 +120,9 @@ function App() {
 
   // ! determine time of day for visual UI shifts
   const getDayTime = useCallback(() => {
-    let current = weather.current.dt;
-    let sunrise = weather.current.sunrise;
-    let sunset = weather.current.sunset;
+    let current = weather[deg].current.dt;
+    let sunrise = weather[deg].current.sunrise;
+    let sunset = weather[deg].current.sunset;
     let twoHours = 7200;
 
     // ? dark
@@ -143,7 +145,7 @@ function App() {
       doc.className = "sunset";
       setThemeBg(sunsetBg);
     }
-  }, [weather, doc, setThemeBg]);
+  }, [weather, doc, setThemeBg, deg]);
 
   // & add location to favorites
   const addToFavs = () => {
@@ -178,7 +180,7 @@ function App() {
       );
       setFavorites(favoritesData);
     }
-    // remove from sesh storage
+    // remove from sesh storage if item was already added
     else {
       removeFav(`fav${num}`);
     }
@@ -244,11 +246,6 @@ function App() {
   // * USE EFFECT
   useEffect(() => {
     doc.className = "default";
-    // ? when enter key is hit
-    const enterKey = (k) => {
-      k.key === "Enter" && townEntered();
-    };
-    document.addEventListener("keydown", enterKey);
 
     // ? set off country code func
     countryCodeFunc();
@@ -264,10 +261,7 @@ function App() {
     setFavorites(favoritesData);
 
     // * END USEEFFECT
-    return () => document.removeEventListener("keydown", enterKey);
   }, [townEntered, countryCodeFunc, getDayTime, weather, doc, setFavorites]);
-
-  console.log("tempUnit", tempUnit);
 
   // * RETURN
   return (
@@ -289,6 +283,7 @@ function App() {
         hiddenInputsRef={hiddenInputsRef}
         burgerClicked={burgerClicked}
         favArrow={favArrow}
+        tempUnit={tempUnit}
       />
       {selectTown && weather && (
         <Output
@@ -299,6 +294,7 @@ function App() {
           favorites={favorites}
           hiddenInputsRef={hiddenInputsRef}
           burgerClicked={burgerClicked}
+          tempUnit={tempUnit}
         />
       )}
     </div>

@@ -8,19 +8,20 @@ export const Fav = ({
   setInputTown,
   townEntered,
   removeFav,
+  deg,
 }) => {
   // ! get local time of area
   const date = new Date();
   const getTime = new Intl.DateTimeFormat("en-GB", {
     minute: "numeric",
     hour: "numeric",
-    timeZone: data.forecast.timezone,
+    timeZone: data.forecast[deg].timezone,
   }).format(date);
   // ! get color for time of day
   const getColor = () => {
-    let current = data.forecast.current.dt;
-    let sunrise = data.forecast.current.sunrise;
-    let sunset = data.forecast.current.sunset;
+    let current = data.forecast[deg].current.dt;
+    let sunrise = data.forecast[deg].current.sunrise;
+    let sunset = data.forecast[deg].current.sunset;
     let twoHours = 7200;
 
     // ? dark
@@ -41,13 +42,9 @@ export const Fav = ({
     }
   };
 
-  const chooseFav = () => {
-    setInputTown(() => {
-      let newName = data.name;
-      console.log("clicked", newName);
-      townEntered();
-      return newName;
-    });
+  const chooseFav = async () => {
+    await townEntered(data.name);
+    setInputTown(data.name);
   };
 
   return (
@@ -58,10 +55,10 @@ export const Fav = ({
         </div>
         <div className='timeFav'>{getTime}</div>
         <div className='tempFav'>
-          <div>{Math.floor(data.forecast.current.temp)}˚</div>
+          <div>{Math.floor(data.forecast[deg].current.temp)}˚</div>
         </div>
         <div className='iconFav'>
-          <Svg weather={data.forecast.current.weather[0].main} />
+          <Svg weather={data.forecast[deg].current.weather[0].main} />
         </div>
       </div>
       <div className='removeFav' onClick={() => removeFav(`fav${index}`)}>

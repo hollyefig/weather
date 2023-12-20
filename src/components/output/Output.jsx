@@ -14,6 +14,7 @@ export const Output = ({
   favorites,
   hiddenInputsRef,
   burgerClicked,
+  tempUnit,
 }) => {
   // & States
   const [countryName, setCountryName] = useState(null);
@@ -112,12 +113,12 @@ export const Output = ({
       favWrap.current.style.maxWidth = computed.width;
       favWrap.current.style.width = "100%";
       // ? set hours of light in day
-      setLightHours(daylightHours(weather.current));
+      setLightHours(daylightHours(weather[deg].current));
 
       // ? get rise/set times
       const riseSetTimes = calculateLocalTime(
-        [weather.current.sunrise, weather.current.sunset],
-        weather.timezone_offset
+        [weather[deg].current.sunrise, weather[deg].current.sunset],
+        weather[deg].timezone_offset
       );
       // format light/set times to be local to the region
       const gmtFormattedTime = formatTimeInTimeZone(riseSetTimes, "GMT");
@@ -127,7 +128,7 @@ export const Output = ({
       // ? get next 12 hrs
       let hrly = [];
       for (let i = 0; i < 19; i++) {
-        hrly.push(weather.hourly[i]);
+        hrly.push(weather[deg].hourly[i]);
       }
       setHourlyArr(hrly);
 
@@ -141,7 +142,7 @@ export const Output = ({
         weekday: "long",
         month: "long",
         year: "numeric",
-        timeZone: weather.timezone,
+        timeZone: weather[deg].timezone,
       }).format(date);
       setCurrentDate(time);
 
@@ -226,8 +227,10 @@ export const Output = ({
           </div>
           {/* main temp  */}
           <div className='mainTempWrap' ref={tempDivWidth}>
-            <span className='temp'>{Math.floor(weather.current.temp)}</span>
-            <span className='deg'>{deg}</span>
+            <span className='temp'>
+              {Math.floor(weather[deg].current.temp)}
+            </span>
+            <span className='deg'>{tempUnit ? "F˚" : "C˚"}</span>
           </div>
           {/* location data  */}
           <div className='locationDataWrap' ref={locDatWrap}>
@@ -254,13 +257,13 @@ export const Output = ({
 
           <div className='currentSect1'>
             <div className='currentIcon'>
-              <Svg weather={weather.current.weather[0].main} />
+              <Svg weather={weather[deg].current.weather[0].main} />
             </div>
             <div className='currentDesc'>
               <span>
                 {/*  display all conditions */}
-                {weather.current.weather.map((e, index) => {
-                  if (weather.current.weather.length - 1 === index) {
+                {weather[deg].current.weather.map((e, index) => {
+                  if (weather[deg].current.weather.length - 1 === index) {
                     return e.description;
                   } else {
                     return `${e.description}, `;
@@ -269,11 +272,11 @@ export const Output = ({
               </span>
               <div className='currentDesc2'>
                 <div className='feelsLike'>
-                  {Math.floor(weather.current.feels_like)}˚
+                  {Math.floor(weather[deg].current.feels_like)}˚
                 </div>
                 <div className='currentHumidity'>
                   <span>
-                    {weather.current.humidity}
+                    {weather[deg].current.humidity}
                     <sup>%</sup>
                   </span>
                 </div>
@@ -318,6 +321,7 @@ export const Output = ({
                       calculateLocalTime={calculateLocalTime}
                       formatTimeInTimeZone={formatTimeInTimeZone}
                       weather={weather}
+                      deg={deg}
                     />
                   );
                 })}
@@ -326,7 +330,7 @@ export const Output = ({
         </div>
       </div>
       {/* SECT 2 */}
-      <Sect2 weather={weather} />
+      <Sect2 weather={weather} deg={deg} />
     </div>
   );
 };

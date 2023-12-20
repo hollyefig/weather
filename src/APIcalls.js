@@ -64,12 +64,18 @@ export const getCountryList = async () => {
 };
 
 // units : imperial = F, metric = C
-export const getWeather = async (lat, lon, units) => {
+export const getWeather = async (lat, lon) => {
   try {
-    const res = await axios.get(
-      `https://api.openweathermap.org/data/3.0/onecall?units=${units}&lat=${lat}&lon=${lon}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
+    const resF = await axios.get(
+      `https://api.openweathermap.org/data/3.0/onecall?units=imperial&lat=${lat}&lon=${lon}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
     );
-    return res.data;
+    const resC = await axios.get(
+      `https://api.openweathermap.org/data/3.0/onecall?units=metric&lat=${lat}&lon=${lon}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
+    );
+    return {
+      cel: resC.data,
+      far: resF.data,
+    };
   } catch (error) {
     console.error("error fetching weather", error);
   }

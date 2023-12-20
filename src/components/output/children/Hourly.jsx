@@ -7,10 +7,11 @@ export const Hourly = ({
   calculateLocalTime,
   formatTimeInTimeZone,
   weather,
+  deg,
 }) => {
   // ? set hour
   let hour = formatTimeInTimeZone(
-    calculateLocalTime([data.dt], weather.timezone_offset),
+    calculateLocalTime([data.dt], weather[deg].timezone_offset),
     "GMT"
   );
   hour = JSON.stringify(hour)

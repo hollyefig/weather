@@ -20,6 +20,7 @@ export const Input = ({
   hiddenInputsRef,
   burgerClicked,
   favArrow,
+  tempUnit,
 }) => {
   // ~ set Refs
 
@@ -62,32 +63,21 @@ export const Input = ({
 
   // ! shift temp unit between C and F
   const shiftTempUnit = () => {
-    if (deg === "˚F") {
+    if (tempUnit) {
       gsap.to(".switchCirc", {
         left: "18px",
         duration: 0.4,
       });
-      setDeg(() => {
-        setTempUnit(() => {
-          townEntered();
-          return "metric";
-        });
-        return "˚C";
-      });
 
-      townEntered();
+      setTempUnit(false);
+      setDeg("cel");
     } else {
       gsap.to(".switchCirc", {
         left: "0px",
         duration: 0.4,
       });
-      setDeg(() => {
-        setTempUnit(() => {
-          townEntered();
-          return "imperial";
-        });
-        return "˚F";
-      });
+      setTempUnit(true);
+      setDeg("far");
     }
   };
 
@@ -124,7 +114,9 @@ export const Input = ({
         <div className='hiddenInputs' ref={hiddenInputsRef}>
           <div className='shiftTemp'>
             <span className='dropdownTextFormat'>Units</span>
-            <div className='currentDeg dropdownTextFormat'>{deg}</div>
+            <div className='currentDeg dropdownTextFormat'>
+              {tempUnit ? "F˚" : "C˚"}
+            </div>
             <div className='tempSwitch' onClick={shiftTempUnit}>
               <div className='switchOuter'>
                 <div className='switchCirc'></div>
@@ -167,6 +159,7 @@ export const Input = ({
                       inputTown={inputTown}
                       townEntered={townEntered}
                       removeFav={removeFav}
+                      deg={deg}
                     />
                   );
                 })}
@@ -232,7 +225,11 @@ export const Input = ({
             </label>
           </div>
           {/*  END checkbox section */}
-          <button type='button' className='btnEnter' onClick={townEntered}>
+          <button
+            type='button'
+            className='btnEnter'
+            onClick={() => townEntered(inputTown)}
+          >
             <span className='material-symbols-outlined'>
               keyboard_arrow_right
             </span>
