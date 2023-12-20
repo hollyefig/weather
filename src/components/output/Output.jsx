@@ -176,6 +176,7 @@ export const Output = ({
     favorites,
     isFav,
     setIsFav,
+    deg,
   ]);
 
   return (

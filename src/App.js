@@ -41,13 +41,13 @@ function App() {
   // & when town is read
   const townEntered = useCallback(
     async (name) => {
+      console.log("town entered");
       let loadTown;
       // ! for string / letters input
       if (isNaN(parseInt(name))) {
         if (name !== null && name !== "") {
           if (isUS) {
             loadTown = await getTown(name);
-            // console.log(...loadTown, loadTown);
             setSelectedTown(...loadTown);
             // ensure data is found before sending off
             if (loadTown.length !== 0) {
@@ -107,7 +107,7 @@ function App() {
         }
       }
     },
-    [inputTown, countryCode, isUS, fetchWeather]
+    [countryCode, isUS, fetchWeather]
   );
 
   // ! get country code
@@ -245,6 +245,11 @@ function App() {
 
   // * USE EFFECT
   useEffect(() => {
+    // ? hit enter key to search
+    const hitEnter = (e) => {
+      e.key === "Enter" && townEntered(inputTown);
+    };
+    document.addEventListener("keydown", hitEnter);
     doc.className = "default";
 
     // ? set off country code func
@@ -260,8 +265,18 @@ function App() {
     );
     setFavorites(favoritesData);
 
+    return () => document.removeEventListener("keydown", hitEnter);
+
     // * END USEEFFECT
-  }, [townEntered, countryCodeFunc, getDayTime, weather, doc, setFavorites]);
+  }, [
+    townEntered,
+    inputTown,
+    countryCodeFunc,
+    getDayTime,
+    weather,
+    doc,
+    setFavorites,
+  ]);
 
   // * RETURN
   return (
