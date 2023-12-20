@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-
+import { gsap } from "gsap";
 import nightBg from "./IMGs/night.png";
 import sunriseBg from "./IMGs/sunriseBg.png";
 import sunsetBg from "./IMGs/sunsetBg.png";
@@ -22,11 +22,13 @@ function App() {
   const [tempUnit, setTempUnit] = useState("imperial");
   const [themeBg, setThemeBg] = useState(defaultBg);
   // for storage
-  const [storageState, setStorageState] = useState([]);
-  const [counter, setCounter] = useState(storageState.length);
+  const [favorites, setFavorites] = useState([]);
 
+  // refs
   const doc = document.documentElement;
   const countryRef = useRef(null);
+  const hiddenInputsRef = useRef(null);
+  const favArrow = useRef(null);
 
   // & fetch weather
   const fetchWeather = useCallback(
@@ -144,45 +146,101 @@ function App() {
   }, [weather, doc, setThemeBg]);
 
   // & add location to favorites
-  const addToFavs = () => {
-    // ? check if item was already added, if not, add item
+  const addToFavs = useCallback(() => {
+    // ? check if item was already added
     let isMatch;
     let num;
-    for (let i = 0; i < sessionStorage.length; i++) {
-      // all current names
-      if (
-        JSON.parse(sessionStorage.getItem(`fav${i}`)).name === selectTown.name
-      ) {
-        isMatch = true;
-        num = i;
-      }
+    if (sessionStorage.length !== 0) {
+      Object.keys(sessionStorage).forEach((e, index) => {
+        if (
+          JSON.parse(sessionStorage.getItem(`fav${index}`)).name ===
+          selectTown.name
+        ) {
+          isMatch = true;
+          num = index;
+        }
+      });
     }
+
+    // add to sesh storage
     if (!isMatch) {
-      let name = selectTown.name;
-      let weatherStuff = weather;
-      counter !== 0 && setCounter(counter + 1);
-      toSessionStorage(name, weatherStuff, counter);
-    } else {
-      sessionStorage.removeItem(`fav${num}`);
-      let arr = [];
-      for (let i = 0; i < sessionStorage.length; i++) {
-        arr.push(JSON.parse(sessionStorage.getItem(`fav${i}`)));
-      }
-      setCounter(arr.length);
-      setStorageState(arr);
-      console.log("this item was already added", sessionStorage, storageState);
+      const input = {
+        name: selectTown.name,
+        forecast: weather,
+      };
+
+      const stringObj = JSON.stringify(input);
+      sessionStorage.setItem(`fav${sessionStorage.length}`, stringObj);
+      // ! get sessionStorage, update state
+      const sessionStorageKeys = Object.keys(sessionStorage);
+      const favoritesData = sessionStorageKeys.map((key) =>
+        JSON.parse(sessionStorage.getItem(key))
+      );
+      setFavorites(favoritesData);
     }
+    // remove from sesh storage
+    else {
+      removeFav(`fav${num}`);
+    }
+  }, [setFavorites, selectTown, weather]);
+
+  // & remove favorite
+  const removeFav = (key) => {
+    // gsap
+    //   .timeline({ defaults: { duration: 0.4, delay: 0 } })
+    //   .to(`#fav${num}`, { opacity: 0 })
+    //   .add(() => {
+    sessionStorage.removeItem(key);
+
+    const storageKeys = Object.keys(sessionStorage);
+
+    storageKeys.forEach((key, index) => {
+      const newName = `fav${index}`;
+      const value = JSON.parse(sessionStorage.getItem(key));
+
+      // Update sessionStorage with the new key
+      sessionStorage.removeItem(key);
+      sessionStorage.setItem(newName, JSON.stringify(value));
+    });
+
+    // Update state to trigger re-render
+    setFavorites((prevFavorites) => {
+      const updatedFavorites = prevFavorites.filter((_, i) => i !== key);
+      return updatedFavorites;
+    });
+
+    // });
   };
 
-  // & to sesh storage
-  const toSessionStorage = (name, weatherStuff, num) => {
-    const info = {
-      name: name,
-      weatherStuff: weatherStuff,
-    };
-    const stringInfo = JSON.stringify(info);
-    sessionStorage.setItem(`fav${num}`, stringInfo);
-    setCounter(counter + 1);
+  // & clicked menu dropdown
+  const burgerClicked = () => {
+    let favArrowDown =
+      getComputedStyle(favArrow.current).transform ===
+      "matrix(0, 1, -1, 0, 0, 0)";
+    let currentHeight = getComputedStyle(hiddenInputsRef.current).height;
+
+    gsap
+      .timeline({ defaults: { duration: 0.3 } })
+      .to(".hiddenInputs", {
+        height: currentHeight === "0px" ? "auto" : 0,
+      })
+      .to(
+        ".input",
+        {
+          backgroundColor:
+            currentHeight === "0px" ? "#0000002e" : "transparent",
+        },
+        "<"
+      )
+      .to(".favsList", { height: currentHeight !== "0px" && "0px" }, "<")
+      .add(
+        // if logic passes, fav arrow must rotate up
+        () =>
+          currentHeight !== "0px" &&
+          favArrowDown &&
+          gsap.to("#favArrow", { rotate: 0 }),
+        "<"
+      );
   };
 
   // * USE EFFECT
@@ -200,24 +258,16 @@ function App() {
     // ? get day time for UI shift
     weather && getDayTime();
 
-    // ! get sessionStorage
-    let arr = [];
-    for (let i = 0; i < sessionStorage.length; i++) {
-      arr.push(JSON.parse(sessionStorage.getItem(`fav${i}`)));
-    }
-    setCounter(arr.length);
-    setStorageState(arr);
+    // ! get sessionStorage, update state
+    const sessionStorageKeys = Object.keys(sessionStorage);
+    const favoritesData = sessionStorageKeys.map((key) =>
+      JSON.parse(sessionStorage.getItem(key))
+    );
+    setFavorites(favoritesData);
 
+    // * END USEEFFECT
     return () => document.removeEventListener("keydown", enterKey);
-  }, [
-    townEntered,
-    countryCodeFunc,
-    getDayTime,
-    weather,
-    doc,
-    setStorageState,
-    counter,
-  ]);
+  }, [townEntered, countryCodeFunc, getDayTime, weather, doc, setFavorites]);
 
   // * RETURN
   return (
@@ -234,17 +284,21 @@ function App() {
         setDeg={setDeg}
         setTempUnit={setTempUnit}
         tempUnit={tempUnit}
-        storageState={storageState}
-        setStorageState={setStorageState}
-        setCounter={setCounter}
-        counter={counter}
+        favorites={favorites}
+        setFavorites={setFavorites}
+        removeFav={removeFav}
+        hiddenInputsRef={hiddenInputsRef}
+        burgerClicked={burgerClicked}
+        favArrow={favArrow}
       />
       <Output
         selectTown={selectTown}
         weather={weather}
         deg={deg}
         addToFavs={addToFavs}
-        storageState={storageState}
+        favorites={favorites}
+        hiddenInputsRef={hiddenInputsRef}
+        burgerClicked={burgerClicked}
       />
     </div>
   );

@@ -11,7 +11,9 @@ export const Output = ({
   weather,
   deg,
   addToFavs,
-  storageState,
+  favorites,
+  hiddenInputsRef,
+  burgerClicked,
 }) => {
   // & States
   const [countryName, setCountryName] = useState(null);
@@ -94,6 +96,12 @@ export const Output = ({
     toCountryName();
   }
 
+  const outputClicked = () => {
+    console.log("click");
+    getComputedStyle(hiddenInputsRef.current).height !== "0px" &&
+      burgerClicked();
+  };
+
   // * USE EFFECT
   useEffect(() => {
     if (selectTown && weather) {
@@ -138,21 +146,23 @@ export const Output = ({
       setCurrentDate(time);
 
       // ? determine if fav'd
-      isFav && setIsFav(false);
-      selectTown &&
-        storageState.forEach((e) => {
-          if (e.name) {
-            if (e.name === selectTown.name) {
-              setIsFav(() => {
-                return true;
-              });
-            } else {
-              setIsFav(() => {
-                return false;
-              });
-            }
-          }
-        });
+      // isFav && setIsFav(false);
+      if (selectTown) {
+        const curr = selectTown.name;
+        const findFav = favorites.some((e) => e.name === curr);
+        if (findFav) {
+          // is fav
+          setIsFav(() => {
+            return true;
+          });
+        } else {
+          // is not fav
+          setIsFav(() => {
+            return false;
+          });
+        }
+      }
+      // ! end useEffect
     }
   }, [
     daylightHours,
@@ -162,13 +172,13 @@ export const Output = ({
     setRiseSet,
     setHourlyArr,
     setCurrentDate,
-    storageState,
+    favorites,
     isFav,
     setIsFav,
   ]);
 
   return (
-    <div className='output' ref={outputRef}>
+    <div className='output' ref={outputRef} onClick={outputClicked}>
       {selectTown && weather && (
         <>
           <div className='sect1'>

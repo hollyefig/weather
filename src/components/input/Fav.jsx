@@ -1,19 +1,26 @@
 import React from "react";
 import { Svg } from "../output/SVG/Svg";
 
-export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {
+export const Fav = ({
+  data,
+  index,
+  inputTown,
+  setInputTown,
+  townEntered,
+  removeFav,
+}) => {
   // ! get local time of area
   const date = new Date();
   const getTime = new Intl.DateTimeFormat("en-GB", {
     minute: "numeric",
     hour: "numeric",
-    timeZone: data.weatherStuff.timezone,
+    timeZone: data.forecast.timezone,
   }).format(date);
   // ! get color for time of day
   const getColor = () => {
-    let current = data.weatherStuff.current.dt;
-    let sunrise = data.weatherStuff.current.sunrise;
-    let sunset = data.weatherStuff.current.sunset;
+    let current = data.forecast.current.dt;
+    let sunrise = data.forecast.current.sunrise;
+    let sunset = data.forecast.current.sunset;
     let twoHours = 7200;
 
     // ? dark
@@ -43,19 +50,22 @@ export const Fav = ({ data, index, inputTown, setInputTown, townEntered }) => {
     });
   };
 
-  //   console.log("fav", data);
-
   return (
-    <div id={`fav${index}`} onClick={chooseFav}>
-      <div className='nameFav' style={{ backgroundColor: getColor() }}>
-        {data.name}
+    <div id={`fav${index}`}>
+      <div className='innerFav' onClick={chooseFav}>
+        <div className='nameFav' style={{ backgroundColor: getColor() }}>
+          {data.name}
+        </div>
+        <div className='timeFav'>{getTime}</div>
+        <div className='tempFav'>
+          <div>{Math.floor(data.forecast.current.temp)}˚</div>
+        </div>
+        <div className='iconFav'>
+          <Svg weather={data.forecast.current.weather[0].main} />
+        </div>
       </div>
-      <div className='timeFav'>{getTime}</div>
-      <div className='tempFav'>
-        <div>{Math.floor(data.weatherStuff.current.temp)}˚</div>
-      </div>
-      <div className='iconFav'>
-        <Svg weather={data.weatherStuff.current.weather[0].main} />
+      <div className='removeFav' onClick={() => removeFav(`fav${index}`)}>
+        <span className='material-symbols-outlined'>cancel</span>
       </div>
     </div>
   );

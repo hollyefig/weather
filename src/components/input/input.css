@@ -140,7 +140,15 @@
   color: var(--white);
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: min-content min-content auto 20px;
+  grid-template-columns: auto 40px;
+  align-items: center;
+  column-gap: 7px;
+}
+
+.innerFav {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns:  min-content min-content auto 20px;
   align-items: center;
   column-gap: 7px;
 }
@@ -182,6 +190,20 @@
 .iconFav {
   display: flex;
   align-items: center;
+}
+
+.removeFav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.removeFav span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--hotPink);
+  font-size: 21px;
 }
 
 .favClearAll {
@@ -246,7 +268,7 @@
 }
 
 .inputTownZip::placeholder {
-  color: var(--mediumBlue);
+  color: var(--placeholder);
   font-family: var(--defaultFont);
   font-style: italic;
 }

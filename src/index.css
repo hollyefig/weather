@@ -50,6 +50,7 @@ body {
   --mediumBlueOpacity: #487896a1;
   --lightPurple: #4f35fa;
   --purple: #1b00c0;
+  --placeholder: #4a88af;
 }
 :root.sunrise {
   --inputTownZipBackground: #e5f9fd78;
@@ -63,6 +64,7 @@ body {
   --mediumBlueOpacity: #8f5da2a1;
   --lightPurple: #4f35fa;
   --purple: #1b00c0;
+  --placeholder: #b77fa4;
 }
 :root.sunset {
   --inputTownZipBackground: #e5f9fd78;
@@ -76,6 +78,7 @@ body {
   --mediumBlueOpacity: #de7575a1;
   --lightPurple: #4f35fa;
   --purple: #1b00c0;
+  --placeholder: #c18989;
 }
 :root.night {
   --inputTownZipBackground: #e5f9fd78;
@@ -89,6 +92,7 @@ body {
   --mediumBlueOpacity: #487896a1;
   --lightPurple: #4f35fa;
   --purple: #1b00c0;
+  --placeholder: #bdced8;
 }
 
 * {

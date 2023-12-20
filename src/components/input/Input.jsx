@@ -1,5 +1,5 @@
 import { Countrydropdown } from "./countryDropdown/Countrydropdown";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import "./input.css";
 import { Fav } from "./Fav";
@@ -13,15 +13,17 @@ export const Input = ({
   deg,
   setDeg,
   setTempUnit,
-  storageState,
-  setStorageState,
+  favorites,
+  setFavorites,
   inputTown,
-  setCounter,
+  removeFav,
+  hiddenInputsRef,
+  burgerClicked,
+  favArrow,
 }) => {
   // ~ set Refs
-  const hiddenInputsRef = useRef(null);
+
   const favListRef = useRef(null);
-  const favArrow = useRef(null);
 
   // ! when non US zip is checked
   const checked = (e) => {
@@ -56,37 +58,6 @@ export const Input = ({
   // ! make input text disappear
   const clickInput = (e) => {
     e.target.value !== "" && (e.target.value = "");
-  };
-
-  // & clicked menu dropdown
-  const burgerClicked = () => {
-    let favArrowDown =
-      getComputedStyle(favArrow.current).transform ===
-      "matrix(0, 1, -1, 0, 0, 0)";
-    let currentHeight = getComputedStyle(hiddenInputsRef.current).height;
-
-    gsap
-      .timeline({ defaults: { duration: 0.3 } })
-      .to(".hiddenInputs", {
-        height: currentHeight === "0px" ? "auto" : 0,
-      })
-      .to(
-        ".input",
-        {
-          backgroundColor:
-            currentHeight === "0px" ? "#0000002e" : "transparent",
-        },
-        "<"
-      )
-      .to(".favsList", { height: currentHeight !== "0px" && "0px" }, "<")
-      .add(
-        // if logic passes, fav arrow must rotate up
-        () =>
-          currentHeight !== "0px" &&
-          favArrowDown &&
-          gsap.to("#favArrow", { rotate: 0 }),
-        "<"
-      );
   };
 
   // ! shift temp unit between C and F
@@ -137,10 +108,9 @@ export const Input = ({
     let result = window.confirm("Clear all favorites?");
     if (result) {
       sessionStorage.clear();
-      setStorageState(() => {
+      setFavorites(() => {
         return [];
       });
-      setCounter(0);
     }
   };
 
@@ -177,27 +147,25 @@ export const Input = ({
               <span>Favorites</span>
               {/* favs length  */}
               <span className='favNumWrap'>
-                <span className='favNum'>{storageState.length}</span>
+                <span className='favNum'>{favorites.length}</span>
               </span>
             </div>
             {/* list of FAVS  */}
             <div className='favsList' ref={favListRef}>
               <div>
-                {storageState &&
-                  storageState.map((e, index) => {
-                    return (
-                      storageState[index] && (
-                        <Fav
-                          key={index}
-                          index={index}
-                          data={e}
-                          setInputTown={setInputTown}
-                          inputTown={inputTown}
-                          townEntered={townEntered}
-                        />
-                      )
-                    );
-                  })}
+                {favorites.map((obj, index) => {
+                  return (
+                    <Fav
+                      key={index}
+                      index={index}
+                      data={obj}
+                      setInputTown={setInputTown}
+                      inputTown={inputTown}
+                      townEntered={townEntered}
+                      removeFav={removeFav}
+                    />
+                  );
+                })}
               </div>
               <div className='favClearAll' onClick={clearsessionStorage}>
                 <span className='material-symbols-outlined'>delete</span>
