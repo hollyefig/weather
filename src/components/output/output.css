@@ -137,12 +137,15 @@
 
 /* & RIGHT SECT  */
 .sect1Right {
-  flex: 1;
+  --maxWidth: 390px;
+  flex: 1 1;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: max-content 1fr;
   grid-template-rows: repeat(4, min-content);
   row-gap: 15px;
-  --maxWidth: 390px;
+  align-content: center;
+  align-items: center;
+  grid-auto-flow: row;
 }
 
 .currentDate {
@@ -163,6 +166,8 @@
 
 
 .currentSect1 {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -250,6 +255,8 @@
 /* & daylight bar */
 
 .currentSect2 {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
   max-width: var(--maxWidth);
   width: 100%;
   /* border-top: 1px solid var(--mediumTeal); */
@@ -361,15 +368,13 @@
   content: "sunset";
 }
 
-.currentSect3 {
-  grid-column: 1 / 2;
-}
-
 /* & Hourly section */
 
 .currentSect3 {
-  max-width: var(--maxWidth);
-  width: 100%;
+  /* max-width: var(--maxWidth); */
+  width: auto;
+  grid-row: 3 / 4;
+  grid-column: 1 / 3;
 }
 
 .hourlySect {
@@ -410,6 +415,30 @@
 }
 
 /* ~ RESPONSIVE  */
+
+@media only screen and (max-width: 1440px) {
+
+  .sect1Right {
+    --maxWidth: 390px;
+    flex: 1 1;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .currentSect2, .currentSect1 {
+    grid-column: 1 / 2;
+    grid-row: auto;
+  }
+
+  .currentSect3 {
+    grid-column: 1 / 2;
+    grid-row: auto;
+    max-width: var(--maxWidth);
+    width: 100%;
+  }
+
+
+}
 
 @media only screen and (max-width: 768px) {
   .sect1 {

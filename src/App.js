@@ -41,7 +41,6 @@ function App() {
   // & when town is read
   const townEntered = useCallback(
     async (name) => {
-      console.log("town entered");
       let loadTown;
       // ! for string / letters input
       if (isNaN(parseInt(name))) {
