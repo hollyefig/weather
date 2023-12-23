@@ -106,12 +106,6 @@ export const Output = ({
   // * USE EFFECT
   useEffect(() => {
     if (selectTown && weather) {
-      // ? set computer width for town/state/country to match temp
-      let computed = window.getComputedStyle(tempDivWidth.current);
-      locDatWrap.current.style.maxWidth = computed.width;
-      locDatWrap.current.style.width = "100%";
-      favWrap.current.style.maxWidth = computed.width;
-      favWrap.current.style.width = "100%";
       // ? set hours of light in day
       setLightHours(daylightHours(weather[deg].current));
 
@@ -231,7 +225,7 @@ export const Output = ({
             <span className='temp'>
               {Math.floor(weather[deg].current.temp)}
             </span>
-            <span className='deg'>{tempUnit ? "F˚" : "C˚"}</span>
+            <span className='deg'>{tempUnit ? "˚F" : "˚C"}</span>
           </div>
           {/* location data  */}
           <div className='locationDataWrap' ref={locDatWrap}>

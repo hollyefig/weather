@@ -115,7 +115,7 @@ export const Input = ({
           <div className='shiftTemp'>
             <span className='dropdownTextFormat'>Units</span>
             <div className='currentDeg dropdownTextFormat'>
-              {tempUnit ? "F˚" : "C˚"}
+              {tempUnit ? "˚F" : "˚C"}
             </div>
             <div className='tempSwitch' onClick={shiftTempUnit}>
               <div className='switchOuter'>
