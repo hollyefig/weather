@@ -12,6 +12,8 @@ GSAP plugin for animations - <a href="https://gsap.com/">GSAP</a>
 
 AXIOS : Promised-based HTTP client for API fetching - <a href="https://axios-http.com/docs/intro">AXIOS</a>
 
+<p>sessionStorage() for storing favorite locations</p>
+
 <!-- ? Link to repo https://github.com/hollyefig/weather -->
 
 <!-- ? API Doc for weather https://openweathermap.org/api/one-call-3?  -->
