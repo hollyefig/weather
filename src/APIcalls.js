@@ -9,7 +9,7 @@ import axios from "axios";
 export const getTown = async (town) => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${town}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${town}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`,
     );
     return res.data;
   } catch (error) {
@@ -21,7 +21,7 @@ export const getTown = async (town) => {
 export const getZip = async (zip) => {
   try {
     const res = await axios.get(
-      `https://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
+      `https://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`,
     );
     return res.data;
   } catch (error) {
@@ -44,7 +44,7 @@ export const getCountryName = async (name) => {
 export const getCountryCode = async (name) => {
   try {
     const res = await axios.get(
-      `https://restcountries.com/v3.1/name/${name}?fullText=true`
+      `https://restcountries.com/v3.1/name/${name}?fullText=true`,
     );
     return res.data;
   } catch (error) {
@@ -55,7 +55,9 @@ export const getCountryCode = async (name) => {
 
 export const getCountryList = async () => {
   try {
-    const res = await axios.get("https://restcountries.com/v3.1/all");
+    const res = await axios.get(
+      "https://restcountries.com/v3.1/all?fields=name",
+    );
     return res.data;
   } catch (error) {
     console.error("error fetching country list", error);
@@ -67,10 +69,10 @@ export const getCountryList = async () => {
 export const getWeather = async (lat, lon) => {
   try {
     const resF = await axios.get(
-      `https://api.openweathermap.org/data/3.0/onecall?units=imperial&lat=${lat}&lon=${lon}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
+      `https://api.openweathermap.org/data/3.0/onecall?units=imperial&lat=${lat}&lon=${lon}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`,
     );
     const resC = await axios.get(
-      `https://api.openweathermap.org/data/3.0/onecall?units=metric&lat=${lat}&lon=${lon}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`
+      `https://api.openweathermap.org/data/3.0/onecall?units=metric&lat=${lat}&lon=${lon}&appid=ff399bc2ce25ee4d8dc39eaeedbeff10`,
     );
     return {
       cel: resC.data,
